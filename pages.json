@@ -225,6 +225,12 @@
 					"navigationBarTitleText": "修改密码"
 				}
 
+			}, {
+				"path": "order/afterSale/afterSale",
+				"style": {
+					"navigationBarTitleText": "申请退换"
+				}
+
 			}
 		]
 	}],

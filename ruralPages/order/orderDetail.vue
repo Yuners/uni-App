@@ -538,14 +538,12 @@ export default {
 		},
 		navToRefund(item, type) {	
 			this.$Router.push({
-				path: `/pages/order/refund/refund?data=${JSON.stringify(
-					item
-				)}&refundType=${type}`
+				path: `/ruralPages/order/afterSale/afterSale`
 			});
 		},
 		navToShippingReturn(item) {
 			this.$Router.push({
-				path: `/pages/order/shipping/return?data=${JSON.stringify(item)}`
+				path: `/ruralPages/order/afterSale/afterSale`
 			});
 		},
 		// 订单操作

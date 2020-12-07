@@ -34,7 +34,8 @@ const msg = (title, duration=1500, mask=false, icon='none')=>{
     });
 }
 
-Vue.prototype.$api = {msg, prePage};
+Vue.prototype.$msg = msg
+Vue.prototype.$prePage = prePage
 
 const app = new Vue({
     ...App,
