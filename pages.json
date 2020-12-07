@@ -1,0 +1,278 @@
+{
+	"pages": [{
+			"path": "pages/index/index",
+			"name": "index",
+			"meta": {
+				"title": "漫游"
+			},
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/Scenes/index",
+			"name": "Scenes",
+			"meta": {
+				"title": "乡村风景"
+			},
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/RoomBoard/index",
+			"name": "RoomBoard",
+			"meta": {
+				"title": "乡村食宿"
+			},
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/Specialty/index",
+			"name": "Specialty",
+			"meta": {
+				"title": "乡村特产"
+			},
+			"style": {
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/Member/index",
+			"name": "Member",
+			"meta": {
+				"title": "我的"
+			},
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		}, {
+			"path": "pages/Member/PersonalCenter/PersonalCenter",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+
+		}, {
+			"path": "pages/Member/SystemSettings/SystemSettings",
+			"style": {
+				"navigationBarTitleText": "系统设置"
+			}
+
+		}, {
+			"path": "pages/Member/userInfo/userInfo",
+			"style": {
+				"navigationBarTitleText": "我的资料"
+			}
+
+		}, {
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+
+		}, {
+			"path": "pages/register/register",
+			"style": {
+				"navigationBarTitleText": "注册"
+			}
+
+		}, {
+			"path": "pages/settings/feedback",
+			"style": {
+				"navigationBarTitleText": "意见反馈"
+			}
+
+		}, {
+			"path": "pages/settings/about",
+			"style": {
+				"navigationBarTitleText": "关于我们"
+			}
+
+		}, {
+			"path": "pages/settings/imprint",
+			"style": {
+				"navigationBarTitleText": "版本说明"
+			}
+
+		}
+	],
+	"subPackages": [{
+		"root": "ruralPages",
+		"pages": [{
+				"path": "RuralDetails/index",
+				"name": "RuralDetails",
+				"meta": {
+					"title": "首页"
+				},
+				"style": {
+					"navigationStyle": "custom",
+					"navigationBarTextStyle": "white"
+				}
+			},
+			{
+				"path": "money/pay",
+				"name": "pay",
+				"meta": {
+					"title": "支付"
+				},
+				"style": {
+					"navigationBarTitleText": "支付订单"
+				}
+			},
+			{
+				"path": "money/paySuccess",
+				"name": "paySuccess",
+				"meta": {
+					"title": "支付成功"
+				},
+				"style": {
+					"navigationBarTitleText": "支付成功"
+				}
+			},
+			{
+				"path": "test/index",
+				"name": "test",
+				"meta": {
+					"title": "支付成功"
+				},
+				"style": {
+					"navigationBarTitleText": "支付成功"
+				}
+			}, {
+				"path": "product/index",
+				"style": {
+					"navigationBarTitleText": "商品详情",
+					"app-plus": {
+						"titleNView": {
+							"type": "transparent"
+						}
+					}
+				}
+
+			}, {
+				"path": "order/createOrder",
+				"style": {
+					"navigationBarTitleText": "创建订单"
+				}
+
+			}, {
+				"path": "address/address",
+				"style": {
+					"navigationBarTitleText": "地址管理"
+				}
+
+			}, {
+				"path": "address/addressManage",
+				"style": {
+					"navigationBarTitleText": "新增收货地址"
+				}
+
+			}, {
+				"path": "order/order",
+				"style": {
+					"navigationBarTitleText": "我的订单"
+				}
+
+			}, {
+				"path": "order/orderDetail",
+				"style": {
+					"navigationBarTitleText": "订单详情"
+				}
+
+			}, {
+				"path": "order/evaluation/evaluation",
+				"style": {
+					"navigationBarTitleText": "发表评价"
+				}
+			}, {
+				"path": "notice/notice",
+				"style": {
+					"navigationBarTitleText": "我的消息",
+					"enablePullDownRefresh": true
+				}
+			}, {
+				"path": "collect/collect",
+				"style": {
+					"navigationBarTitleText": "我的收藏"
+				}
+
+			}, {
+				"path": "order/evaluation/myRating",
+				"style": {
+					"navigationBarTitleText": "我的评价",
+					"enablePullDownRefresh": true
+				}
+
+			}, {
+				"path": "certification/certification",
+				"style": {
+					"navigationBarTitleText": "商铺认证"
+				}
+
+			}, {
+				"path": "password/forgetPass",
+				"style": {
+					"navigationBarTitleText": "忘记密码"
+				}
+
+			}, {
+				"path": "password/changePass",
+				"style": {
+					"navigationBarTitleText": "修改密码"
+				}
+
+			}
+		]
+	}],
+	"tabBar": {
+		"color": "#dadada",
+		"selectedColor": "#4FAA81",
+		"borderStyle": "white",
+		"backgroundColor": "#f4f4f4",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/images/flight.png",
+				"selectedIconPath": "static/images/flightx.png",
+				"text": "漫游"
+			},
+			{
+				"pagePath": "pages/Scenes/index",
+				"iconPath": "static/images/w_scenery.png",
+				"selectedIconPath": "static/images/w_scenertyx.png",
+				"text": "乡村风景"
+			},
+			{
+				"pagePath": "pages/RoomBoard/index",
+				"iconPath": "static/images/roomandboard.png",
+				"selectedIconPath": "static/images/roomandboardx.png",
+				"text": "乡村食宿"
+			},
+			{
+				"pagePath": "pages/Specialty/index",
+				"iconPath": "static/images/localspecialty.png",
+				"selectedIconPath": "static/images/localspecialtyx.png",
+				"text": "乡村特产"
+			},
+			{
+				"pagePath": "pages/Member/index",
+				"iconPath": "static/images/myx.png",
+				"selectedIconPath": "static/images/my.png",
+				"text": "我的"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#4FAA81",
+		"backgroundColor": "#4FAA81"
+	},
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue",
+		"^fl-(.*)": "@/components/fl-$1/index.vue"
+	}
+}
