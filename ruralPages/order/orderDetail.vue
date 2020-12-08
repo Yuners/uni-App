@@ -520,31 +520,25 @@ export default {
 			/* #endif */
 			console.log('复制成功')
 		},
-		navTo(route) {
-			this.$Router.push({
-				path:route
-			});
+		navTo(url) {
+			uni.navigateTo({
+				url
+			})
 		},
 		navToEvaluation(item,  type) {
-			this.$Router.push({
-				path:`/ruralPages/order/evaluation/evaluation`,
-				query:{
-					data:JSON.stringify(
-						item
-					),
-					type:type
-				}
-			});
+			uni.navigateTo({
+				url:`/ruralPages/order/evaluation/evaluation?type=${type}&data=`+ encodeURIComponent(JSON.stringify(item))
+			})
 		},
-		navToRefund(item, type) {	
-			this.$Router.push({
-				path: `/ruralPages/order/afterSale/afterSale`
-			});
+		navToRefund(item, type) {
+			uni.navigateTo({
+				url:`/ruralPages/order/afterSale/afterSale`
+			})
 		},
 		navToShippingReturn(item) {
-			this.$Router.push({
-				path: `/ruralPages/order/afterSale/afterSale`
-			});
+			uni.navigateTo({
+				url:`/ruralPages/order/afterSale/afterSale`
+			})
 		},
 		// 订单操作
 		handleOrderOperation(item, type) {

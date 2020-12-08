@@ -22,7 +22,7 @@
 
 		<view class="row default-row">
 			<text class="tit">设为默认</text>
-			<switch :checked="addressData.defaule" color="#4FAA81" @change="switchChange" />
+			<switch :checked="addressData.defaule" :color="color" @change="switchChange" />
 		</view>
 		<button class="add-btn" @click="confirm">提交</button>
 	</view>
@@ -40,6 +40,11 @@
 					area: '',
 					default: false
 				}
+			}
+		},
+		computed:{
+			color(){
+				return this.addressData.default ? '#4FAA81' : '#dfdfdf'
 			}
 		},
 		onLoad(option){

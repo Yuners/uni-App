@@ -120,25 +120,9 @@ export default {
       }
     },
     ruralSkip(){
-      this.$Router.push({
-        path:`/ruralPages/RuralDetails/index`,
-        query:{
-          id:'123'
-        }
-      })
-      // uni.navigateTo({
-      //   url:"/ruralPages/RuralDetails/index",
-      //   success:function (res) {
-      //     console.log(res)
-      //   },
-      //   fail:function (err) {
-      //     console.log(err)
-      //   },
-      //   complete:function (e) {
-      //     console.log(e)
-      //
-      //   }
-      // })
+      uni.navigateTo({
+        url:'/ruralPages/RuralDetails/index?id=123'
+      });
     },
     onPulling(){
       console.log(11111111)

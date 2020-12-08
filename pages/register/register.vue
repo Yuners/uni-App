@@ -74,9 +74,9 @@
 			switchChange(e){
 				this.passwordShow = e.detail.value
 			},
-			navTo(path){
-				this.$Router.push({
-					path
+			navTo(url){
+				uni.navigateTo({
+					url
 				})
 			},
 			codeChange(text) {
@@ -126,7 +126,7 @@
 				color: $base-color;
 			}
 		}
-		
+
 		.skip{
 			padding: 0 100rpx;
 			display: flex;

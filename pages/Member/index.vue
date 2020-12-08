@@ -127,16 +127,13 @@
     methods:{
         navTo(url,state){
 			if(state !== ''){
-				this.$Router.push({
-					path:url,
-					query:{
-						state
-					}
-				})
+              uni.navigateTo({
+                url:url + '?' + `state=${state}`
+              })
 			}else{
-				this.$Router.push({
-					path:url
-				})
+              uni.navigateTo({
+                url
+              })
 			}
         },
     }

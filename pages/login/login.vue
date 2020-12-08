@@ -32,7 +32,7 @@
 				注册账号
 			</view>
 			<view class="item" @tap="navTo('/ruralPages/password/forgetPass')">
-				忘记密码				
+				忘记密码
 			</view>
 		</view>
 		<view class="push-button">
@@ -59,9 +59,9 @@
 			switchChange(e){
 				this.passwordShow = e.detail.value
 			},
-			navTo(path){
-				this.$Router.push({
-					path
+			navTo(url){
+				uni.navigateTo({
+					url
 				})
 			}
 		}
@@ -83,11 +83,11 @@
 			padding: 0 100rpx;
 			.detail{
 				&::before{
-					
+
 				}
 			}
 		}
-		
+
 		.skip{
 			padding: 0 100rpx;
 			display: flex;

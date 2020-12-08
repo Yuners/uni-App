@@ -231,6 +231,14 @@
 					"navigationBarTitleText": "申请退换"
 				}
 
+			}, {
+				"path": "order/tracking/tracking",
+				"style": {
+					"navigationBarTitleText": "订单跟踪",
+					"navigationBarBackgroundColor":"#FFFFFF",
+					"navigationBarTextStyle":"black"
+				}
+
 			}
 		]
 	}],

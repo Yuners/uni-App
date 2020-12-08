@@ -153,14 +153,6 @@ export default {
         this.status = 'nomore'
       }
     },
-    ruralSkip(){
-      this.$Router.push({
-        path:`/pages/RuralDetails/RuralHome/index`,
-        query:{
-          id:'123'
-        }
-      })
-    },
     onPulling(){
       console.log(11111111)
     },

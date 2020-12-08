@@ -200,8 +200,10 @@ export default {
 			this.refund_type = e.detail.value;
 		},
 		// 跳转页面
-		navTo(path) {
-			this.$Router.push({ path });
+		navTo(url) {
+			uni.navigateTo({
+				url
+			})
 		},
 		// 退货/退款
 		async handleOrderRefundApply(e) {

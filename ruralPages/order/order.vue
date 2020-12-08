@@ -4,7 +4,7 @@
 			<view
 				v-for="(item, index) in navList" :key="index"
 				class="nav-item"
-				:class="{current: tabCurrentIndex === index}"
+				:class="{current: tabCurrentIndex == index}"
 				@click="tabClick(index)"
 			>
 				{{item.text}}
@@ -64,7 +64,8 @@
 							<text class="price">143.7</text>
 						</view>
 						<view class="action-box b-t" v-if="item.state != 9">
-							<button class="action-btn" @click="toNav()">订单详情</button>
+							<button class="action-btn" @click="toNav('/ruralPages/order/tracking/tracking')">查看物流</button>
+							<button class="action-btn" @click="toNav('/ruralPages/order/orderDetail')">订单详情</button>
 							<button class="action-btn" @click="cancelOrder(item)">取消订单</button>
 							<button class="action-btn recom">立即支付</button>
 						</view>
@@ -118,12 +119,12 @@
 			};
 		},
 
-		onLoad(){
+		onLoad(options){
 			/**
 			 * 修复app端点击除全部订单外的按钮进入时不加载数据的问题
 			 * 替换onLoad下代码即可
 			 */
-			let options = this.$Route.query
+			console.log(options)
 			this.tabCurrentIndex = options.state;
 			// #ifndef MP
 			this.loadData()
@@ -178,13 +179,13 @@
 					navItem.loadingType = 'more';
 				}, 600);
 			},
-			
-			toNav(){
-				this.$Router.push({
-					path: `/ruralPages/order/orderDetail`
+
+			toNav(url){
+				uni.navigateTo({
+					url
 				})
 			},
-			
+
 			//swiper 切换
 			changeTab(e){
 				this.tabCurrentIndex = e.target.current;

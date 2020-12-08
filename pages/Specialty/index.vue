@@ -171,8 +171,8 @@ export default {
   },
   methods: {
     payOrder() {
-      this.$Router.push({
-        path:'/ruralPages/product/index'
+      uni.navigateTo({
+        url:'/ruralPages/product/index'
       })
     }
   }

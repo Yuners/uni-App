@@ -350,8 +350,8 @@
 				this.favorite = !this.favorite;
 			},
 			buy(){
-				this.$Router.push({
-					path: `/ruralPages/order/createOrder`
+				uni.navigateTo({
+					url:`/ruralPages/order/createOrder`
 				})
 			},
 			stopPrevent(){}

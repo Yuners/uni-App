@@ -64,9 +64,9 @@
 			switchChange(e){
 				this.passwordShow = e.detail.value
 			},
-			navTo(path){
-				this.$Router.push({
-					path
+			navTo(url){
+				uni.navigateTo({
+					url
 				})
 			},
 			codeChange(text) {
@@ -96,7 +96,7 @@
 		height: 100%;
 		background-color: #fff;
 		padding-top: 150rpx;
-		
+
 		.login-main{
 			padding: 0 100rpx;
 			.detail{
@@ -108,7 +108,7 @@
 				color: $base-color;
 			}
 		}
-		
+
 		.push-button{
 			width: 100%;
 			padding: 0 100rpx;

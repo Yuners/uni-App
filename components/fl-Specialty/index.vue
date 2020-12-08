@@ -166,8 +166,8 @@
     },
     methods: {
       payOrder() {
-        this.$Router.push({
-          path:'/ruralPages/money/pay'
+        uni.navigateTo({
+          url:'/ruralPages/money/pay'
         })
       }
     }

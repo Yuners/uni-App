@@ -72,9 +72,9 @@ export default {
 				});
 				return;
 			}
-			this.$Router.push({
-				path:route
-			});
+			uni.navigateTo({
+				url:route
+			})
 		},
 	}
 };

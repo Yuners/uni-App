@@ -86,9 +86,9 @@ export default {
 			this.user = uni.getStorageSync('user');
 		},
 		// 通用跳转
-		navTo(route) {
-			this.$Router.push({
-				path:route
+		navTo(url) {
+			uni.navigateTo({
+				url
 			});
 		},
 		// 退出登录

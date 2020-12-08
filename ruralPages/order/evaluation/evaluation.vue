@@ -129,8 +129,8 @@ export default {
 		}
 	},
 	onLoad(options) {
-		
-		let a = JSON.parse(options.query)
+
+		let a = JSON.parse(decodeURIComponent(options.item))
 		this.initData(a);
 	},
 	methods: {

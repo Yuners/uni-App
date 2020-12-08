@@ -75,7 +75,12 @@
         "setting" : {
             "urlCheck" : false
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "小程序将要获取您的微信信息"
+            }
+        }
     },
     "mp-alipay" : {
         "usingComponents" : true

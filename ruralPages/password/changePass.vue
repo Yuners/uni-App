@@ -12,7 +12,7 @@
 				:clearable="false"
 			>
 				<u-icon name="lock" slot="icon" size="40"></u-icon>
-				<switch class="detail" slot="right" :checked="passwordShow" color="#4FAA81" @change="switchChange" />
+				<switch class="detail" slot="right" :checked="passwordShow" :color="color" @change="switchChange" />
 			</u-field>
 			<u-field
 				style="margin-top: 30rpx;"
@@ -25,7 +25,7 @@
 				:clearable="false"
 			>
 				<u-icon name="lock" slot="icon" size="40"></u-icon>
-				<switch class="detail" slot="right" :checked="passwordShow" color="#4FAA81" @change="switchChange" />
+				<switch class="detail" slot="right" :checked="passwordShow" :color="color" @change="switchChange" />
 			</u-field>
 			<u-field
 				style="margin-top: 30rpx;"
@@ -38,7 +38,7 @@
 				:clearable="false"
 			>
 				<u-icon name="lock" slot="icon" size="40"></u-icon>
-				<switch class="detail" slot="right" :checked="passwordShow" color="#4FAA81" @change="switchChange" />
+				<switch class="detail" slot="right" :checked="passwordShow" :color="color" @change="switchChange" />
 			</u-field>
 		</view>
 		<view class="push-button">
@@ -63,13 +63,19 @@
 				},
 			}
 		},
+		computed:{
+			color(){
+				console.log(this.passwordShow)
+				return this.passwordShow ? '#4FAA81' : '#dfdfdf'
+			}
+		},
 		methods: {
 			switchChange(e){
 				this.passwordShow = e.detail.value
 			},
-			navTo(path){
-				this.$Router.push({
-					path
+			navTo(url){
+				uni.navigateTo({
+					url
 				})
 			},
 			codeChange(text) {
@@ -98,7 +104,7 @@
 	.changePass{
 		height: 100%;
 		padding-top: 150rpx;
-		
+
 		.login-main{
 			padding: 0 100rpx;
 			.detail{
@@ -110,7 +116,7 @@
 				color: $base-color;
 			}
 		}
-		
+
 		.push-button{
 			width: 100%;
 			padding: 0 100rpx;
