@@ -57,7 +57,7 @@
             待评价
           </view>
         </view>
-        <view class="orderItem">
+        <view class="orderItem" @tap="navTo('/ruralPages/order/afterSale/list')">
           <view class="imageItem">
             <image :src="require('@/static/images/thsh.png')" />
           </view>
@@ -110,6 +110,14 @@
           </view>
           <view class="className">
             系统设置
+          </view>
+        </view>
+        <view class="activityItem" @tap="navTo('/ruralPages/goodsModule/index')">
+          <view class="imageItem">
+            <image :src="require('@/static/images/xt.png')" />
+          </view>
+          <view class="className">
+            我的商品
           </view>
         </view>
       </view>

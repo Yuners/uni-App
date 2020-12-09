@@ -239,8 +239,34 @@
 					"navigationBarTextStyle":"black"
 				}
 
+			}, {
+				"path": "order/afterSale/list",
+				"style": {
+					"navigationBarTitleText": "退款/售后"
+				}
+
+			}, {
+				"path": "order/afterSale/returnDetails",
+				"style": {
+					"navigationBarTitleText": "售后详情"
+				}
+
+			}, {
+				"path": "order/afterSale/progress",
+				"style": {
+					"navigationBarTitleText": "审核进度"
+				}
+
 			}
-		]
+		    ,{
+                    "path" : "goodsModule/index",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "我的商品"
+                }
+                
+                }
+            ]
 	}],
 	"tabBar": {
 		"color": "#dadada",

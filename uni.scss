@@ -109,9 +109,63 @@ $uni-font-size-subtitle:36rpx;
 $uni-color-paragraph: #3F536E; // 文章段落颜色
 $uni-font-size-paragraph:30rpx;
 
-@mixin _border($dir) {
+@mixin around_border {
 	position: relative;
 	&::before{
+		position: absolute;
+		z-index: 3;
+		width: 0;
+		top: 0;
+		bottom: 0;
+		content: '';
+		left: 0;
+		-webkit-transform: scaleX(0.5);
+		transform: scaleX(0.5);
+		border-left: 1px solid #E4E7ED;
+	}
+	&::after{
+		position: absolute;
+		z-index: 3;
+		width: 0;
+		content: '';
+		top: 0;
+		bottom: 0;
+		right: 0;
+		-webkit-transform: scaleX(0.5);
+		transform: scaleX(0.5);
+		border-left: 1px solid #E4E7ED;
+	}
+}
+
+@mixin _border($dir,$num:one) {
+	position: relative;
+	@if $num == two {
+		&::before{
+			position: absolute;
+			z-index: 3;
+			left: 0;
+			right: 0;
+			height: 0;
+			content: '';
+			top: 0;
+			-webkit-transform: scaleY(0.5);
+			transform: scaleY(0.5);
+			border-top: 1px solid #E4E7ED;
+		}
+		&::after{
+			position: absolute;
+			z-index: 3;
+			left: 0;
+			right: 0;
+			height: 0;
+			content: '';
+			bottom: 0;
+			-webkit-transform: scaleY(0.5);
+			transform: scaleY(0.5);
+			border-top: 1px solid #E4E7ED;
+		}
+	}@else if $num == one{
+		&::before{
 			position: absolute;
 			z-index: 3;
 			left: 0;
@@ -126,5 +180,6 @@ $uni-font-size-paragraph:30rpx;
 			} @else if $dir == bottom {
 				bottom: 0;
 			}
+		}
 	}
 }
