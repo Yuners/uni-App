@@ -174,7 +174,10 @@ export default {
       uni.navigateTo({
         url:'/ruralPages/product/index'
       })
-    }
+    },
+	toJSON(){
+		return this
+	}
   }
 }
 </script>

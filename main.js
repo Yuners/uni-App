@@ -3,9 +3,11 @@ import App from './App'
 import store from "./store";
 import flowerPlugin from "@/plugins/fl";
 import uView from 'uview-ui';
+import loading from './components/p-loading/loading.vue'
 Vue.use(uView);
 Vue.config.productionTip = false
 Vue.use(flowerPlugin);
+Vue.component('loading',loading)
 
 App.mpType = 'app'
 

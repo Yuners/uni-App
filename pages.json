@@ -13,13 +13,17 @@
 			"path": "pages/Scenes/index",
 			"name": "Scenes",
 			"meta": {
-				"title": "乡村风景"
+				"title": "乡村"
 			},
 			"style": {
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true,
+				"backgroundColorTop": "#4FAA81",
+				"backgroundTextStyle":"light",
+				"onReachBottomDistance": 30
 			}
 		},
-		{
+		/* {
 			"path": "pages/RoomBoard/index",
 			"name": "RoomBoard",
 			"meta": {
@@ -28,7 +32,7 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
-		},
+		}, */
 		{
 			"path": "pages/Specialty/index",
 			"name": "Specialty",
@@ -37,7 +41,9 @@
 			},
 			"style": {
 				"navigationStyle": "custom",
-				"enablePullDownRefresh": true
+				"enablePullDownRefresh": true,
+				"backgroundColorTop": "#4FAA81",
+				"backgroundTextStyle":"light"
 			}
 		},
 		{
@@ -109,8 +115,12 @@
 					"title": "首页"
 				},
 				"style": {
-					"navigationStyle": "custom",
-					"navigationBarTextStyle": "white"
+					"navigationBarTitleText": "乡村简介",
+					"navigationBarTextStyle": "white",
+					"enablePullDownRefresh": true,
+					"backgroundColorTop": "#4FAA81",
+					"backgroundTextStyle":"light",
+					"onReachBottomDistance": 30
 				}
 			},
 			{
@@ -283,19 +293,19 @@
 				"pagePath": "pages/Scenes/index",
 				"iconPath": "static/images/w_scenery.png",
 				"selectedIconPath": "static/images/w_scenertyx.png",
-				"text": "乡村风景"
+				"text": "乡村"
 			},
-			{
+			/* {
 				"pagePath": "pages/RoomBoard/index",
 				"iconPath": "static/images/roomandboard.png",
 				"selectedIconPath": "static/images/roomandboardx.png",
 				"text": "乡村食宿"
-			},
+			}, */
 			{
 				"pagePath": "pages/Specialty/index",
 				"iconPath": "static/images/localspecialty.png",
 				"selectedIconPath": "static/images/localspecialtyx.png",
-				"text": "乡村特产"
+				"text": "特产"
 			},
 			{
 				"pagePath": "pages/Member/index",
@@ -313,6 +323,7 @@
 	},
 	"easycom": {
 		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue",
-		"^fl-(.*)": "@/components/fl-$1/index.vue"
+		"^fl-(.*)": "@/components/fl-$1/index.vue",
+		"lb-picker": "@/components/lb-picker/index.vue"
 	}
 }
