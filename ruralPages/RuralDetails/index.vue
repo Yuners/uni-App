@@ -92,6 +92,12 @@
 				case 2:
 					this.$refs.food.loadMore()
 					break;
+				case 3:
+					this.$refs.accommodation.loadMore()
+					break;
+				case 4:
+					this.$refs.specialty.loadMore()
+					break;
 			}
 		},
 		onPullDownRefresh() {
@@ -105,6 +111,12 @@
 				case 2:
                   this.$refs.food.pullRefresh()
                   break;
+				case 3:
+                  this.$refs.accommodation.pullRefresh()
+                  break;
+				case 4:
+					this.$refs.specialty.pullRefresh()
+					break;
 			}
 		},
 		methods: {
@@ -124,6 +136,16 @@
 						if(!this.food) return
 						this.food = false
 						this.$refs.food.fetchData()
+						break;
+					case 3:
+						if(!this.accommodation) return
+						this.accommodation = false
+						this.$refs.accommodation.fetchData()
+						break;
+					case 3:
+						if(!this.specialty) return
+						this.specialty = false
+						this.$refs.specialty.getList()
 						break;
 				}
 			},

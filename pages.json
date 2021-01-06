@@ -19,7 +19,7 @@
 				"navigationStyle": "custom",
 				"enablePullDownRefresh": true,
 				"backgroundColorTop": "#4FAA81",
-				"backgroundTextStyle":"light",
+				"backgroundTextStyle": "light",
 				"onReachBottomDistance": 30
 			}
 		},
@@ -43,7 +43,7 @@
 				"navigationStyle": "custom",
 				"enablePullDownRefresh": true,
 				"backgroundColorTop": "#4FAA81",
-				"backgroundTextStyle":"light"
+				"backgroundTextStyle": "light"
 			}
 		},
 		{
@@ -119,7 +119,7 @@
 					"navigationBarTextStyle": "white",
 					"enablePullDownRefresh": true,
 					"backgroundColorTop": "#4FAA81",
-					"backgroundTextStyle":"light",
+					"backgroundTextStyle": "light",
 					"onReachBottomDistance": 30
 				}
 			},
@@ -245,8 +245,8 @@
 				"path": "order/tracking/tracking",
 				"style": {
 					"navigationBarTitleText": "订单跟踪",
-					"navigationBarBackgroundColor":"#FFFFFF",
-					"navigationBarTextStyle":"black"
+					"navigationBarBackgroundColor": "#FFFFFF",
+					"navigationBarTextStyle": "black"
 				}
 
 			}, {
@@ -267,16 +267,20 @@
 					"navigationBarTitleText": "审核进度"
 				}
 
+			}, {
+				"path": "goodsModule/index",
+				"style": {
+					"navigationBarTitleText": "我的商品"
+				}
+
+			}, {
+				"path": "particulars/particulars",
+				"style": {
+					"navigationStyle": "custom"
+				}
+
 			}
-		    ,{
-                    "path" : "goodsModule/index",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "我的商品"
-                }
-                
-                }
-            ]
+		]
 	}],
 	"tabBar": {
 		"color": "#dadada",
