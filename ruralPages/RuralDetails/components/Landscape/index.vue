@@ -2,7 +2,7 @@
 	<view class="landscape">
 		<view class="scenery">
 			<view v-if="!loading">
-				<view class="list-item" v-for="(item,index) of list" :key="index" @tap="toNav">
+				<view class="list-item" v-for="(item,index) of list" :key="index" @tap="toNav(item.sceneryId)">
 					<view class="itemAbout">
 						<view class="aboutTitle">
 							<text>{{ item.sceneryName }}</text>
@@ -121,9 +121,9 @@
 					uni.stopPullDownRefresh();
 				}, 1000);
 			},
-			toNav(){
+			toNav(id){
 				uni.navigateTo({
-					url:'/ruralPages/particulars/particulars'
+					url: `/ruralPages/particulars/sceneryDetails?id=${id}`
 				})
 			}
 		}
@@ -133,7 +133,6 @@
 <style lang="scss" scoped>
 	.landscape {
 		min-height: 100%;
-
 		background: #F4F4F4;
 
 		.imageItem {
@@ -201,6 +200,7 @@
 			background-color: #FFFFFF;
 			box-shadow: 0px 7px 12px 0px rgba(235, 235, 235, 0.85);
 			border-radius: 20rpx;
+			margin-bottom: 26rpx;
 
 			.itemAbout {
 				padding-top: 22rpx;
@@ -259,7 +259,7 @@
 			.itemAbouts {
 				font-size: 28rpx;
 				text-indent: 56rpx;
-				padding: 16rpx;
+				line-height: 1.8;
 				display: -webkit-box;
 				-webkit-line-clamp: 2;
 				overflow: hidden;

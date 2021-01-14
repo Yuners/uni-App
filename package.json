@@ -11,8 +11,6 @@
 	"license": "ISC",
 	"dependencies": {
 		"luch-request": "^3.0.4",
-		"uni-read-pages": "^1.0.5",
-		"uni-simple-router": "^1.5.5",
 		"uview-ui": "^1.8.2",
 		"vuex": "^3.5.1"
 	}

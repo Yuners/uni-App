@@ -274,7 +274,19 @@
 				}
 
 			}, {
-				"path": "particulars/particulars",
+				"path": "particulars/sceneryDetails",
+				"style": {
+					"navigationStyle": "custom"
+				}
+
+			}, {
+				"path": "particulars/foodDetails",
+				"style": {
+					"navigationStyle": "custom"
+				}
+
+			}, {
+				"path": "particulars/bedDetails",
 				"style": {
 					"navigationStyle": "custom"
 				}

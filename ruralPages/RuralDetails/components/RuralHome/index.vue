@@ -104,10 +104,10 @@
 
 <style lang="scss" scoped>
 	.ruralHome {
-		height: 100%;
+		min-height: 100%;
 		position: relative;
-		overflow-y: scroll;
 		background-color: #ffffff;
+		padding-bottom: 50px;
 
 		.imageItem {
 			width: 36rpx;

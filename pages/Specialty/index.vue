@@ -1,25 +1,27 @@
 <template>
 	<view class="wrap">
-		<u-navbar :is-back="false" :background="background">
-			<view class="navContent">
-				<view class="flex-left">
-					<view class="text">
-						<span>杭州</span>
-						<u-icon name="arrow-down" color="#ffffff" size="30" />
+		<view class="tablist" style="top: 0;">
+			<u-navbar :is-back="false" :is-fixed="false" :background="background">
+				<view class="navContent">
+					<view class="flex-left">
+						<view class="text">
+							<span>杭州</span>
+							<u-icon name="arrow-down" color="#ffffff" size="30" />
+						</view>
+					</view>
+					<view class="flex-center">
+						<u-search placeholder="输入乡村名字" v-model="keyword" height="60" :show-action="false" margin="0 0 0 15rpx" bg-color="#ffffff"
+						 :input-style="searchStyle" />
 					</view>
 				</view>
-				<view class="flex-center">
-					<u-search placeholder="输入乡村名字" v-model="keyword" height="60" :show-action="false" margin="0 0 0 15rpx" bg-color="#ffffff"
-					 :input-style="searchStyle" />
-				</view>
-			</view>
-		</u-navbar>
+			</u-navbar>
+		</view>
 		<view v-if="!loading">
 			<u-waterfall v-model="flowList" ref="uWaterfall">
 				<template v-slot:left="{leftList}">
-					<view class="demo-warter" v-for="(item, index) in leftList" :key="index" @tap="payOrder">
+					<view class="demo-warter" v-for="(item, index) in leftList" :key="index" @tap="payOrder(item.specialtyId)">
 						<!-- 警告：微信小程序中需要hx2.8.11版本才支持在template中结合其他组件，比如下方的lazy-load组件 -->
-						<u-lazy-load threshold="-450" :image="item.fileUrl" :index="index" />
+						<u-lazy-load threshold="-450" :image="item.showFileUrl" :index="index" />
 						<view class="wrapMain">
 							<view class="demo-title">
 								<text class="read">
@@ -39,8 +41,8 @@
 					</view>
 				</template>
 				<template v-slot:right="{rightList}">
-					<view class="demo-warter warRight" v-for="(item, index) in rightList" :key="index" @tap="payOrder">
-						<u-lazy-load threshold="-450" :image="item.fileUrl" :index="index" />
+					<view class="demo-warter warRight" v-for="(item, index) in rightList" :key="index" @tap="payOrder(item.specialtyId)">
+						<u-lazy-load threshold="-450" :image="item.showFileUrl" :index="index" />
 						<view class="wrapMain">
 							<view class="demo-title">
 								<text class="read">
@@ -86,7 +88,7 @@
 					fontSize: '24rpx'
 				},
 				pages: {
-					pageSize: 10, // 每页多少条
+					pageSize: 5, // 每页多少条
 					pageIndex: 1, // 当前页数
 					total: 0, // 总页数
 				},
@@ -164,9 +166,9 @@
 						this.loading = false
 					})
 			},
-			payOrder() {
+			payOrder(id) {
 				uni.navigateTo({
-					url: '/ruralPages/product/index'
+					url: `/ruralPages/product/index?shopId=${id}`
 				})
 			},
 			toJSON() {
@@ -181,6 +183,13 @@
 		min-height: 100%;
 		padding-bottom: 30rpx;
 		background: #F4F4F4;
+
+		.tablist {
+			position: sticky;
+			z-index: 9999;
+			left: 0;
+			width: 100%;
+		}
 
 		.loading {
 			margin-top: 300rpx;

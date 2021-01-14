@@ -47,7 +47,7 @@
 						<text class="gender-item-text">{{ item.name }}</text>
 					</label>
 				</radio-group>
-				<fl-list-cell
+				<list-cell
 					@eventClick="chooseRefundReasonType"
 					title="退款原因"
 					:tips="refund_reason || '请选择'"
@@ -105,6 +105,8 @@
  * @copyright 2019
  */
 import Json from "@/Json.js"
+import ListCell from "@/ruralPages/components/fl-list-cell/index.vue"
+
 export default {
 	data() {
 		return {
@@ -143,6 +145,9 @@ export default {
 		wordLimit() {
 			return 140 - this.refund_reason.length;
 		}
+	},
+	components:{
+		ListCell
 	},
 	onLoad() {
 		this.initData();

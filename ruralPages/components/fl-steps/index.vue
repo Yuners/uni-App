@@ -1,5 +1,5 @@
 <template>
-	<view class="uni-steps">
+	<view class="uni-steps" :style="stepStype">
 		<view :class="[direction==='column'?'uni-steps__column':'uni-steps__row']">
 			<view :class="[direction==='column'?'uni-steps__column-container':'uni-steps__row-container']">
 				<view :class="[direction==='column'?'uni-steps__column-line-item':'uni-steps__row-line-item']" v-for="(item,index) in options"
@@ -59,7 +59,19 @@
 				default () {
 					return []
 				}
-			} // 数据
+			}, // 数据
+			height: {
+				type: Number,
+				default: 600
+			}
+		},
+		computed:{
+			stepStype(){
+				if (this.direction == 'row') return 
+				return {
+					height:  this.height ? this.height + 'rpx' : 'auto'
+				}
+			}
 		},
 		data() {
 			return {}
@@ -90,7 +102,7 @@
 		/* #ifndef APP-NVUE */
 		display: flex;
 		/* #endif */
-		flex-direction: row-reverse;
+		height: 100%;
 	}
 
 	.uni-steps__row-text-container {
@@ -119,13 +131,11 @@
 
 	.uni-steps__column-text {
 		padding: 6px 0px;
-		border-bottom-style: solid;
-		border-bottom-width: 1px;
-		border-bottom-color: $uni-border-color;
 		/* #ifndef APP-NVUE */
 		display: flex;
 		/* #endif */
 		flex-direction: column;
+		flex: 1;
 	}
 
 	.uni-steps__row-title {
@@ -137,7 +147,7 @@
 	.uni-steps__column-title {
 		font-size: $uni-font-size-base;
 		text-align: left;
-		line-height: 18px;
+		line-height: 22px;
 	}
 
 	.uni-steps__row-desc {
@@ -228,11 +238,9 @@
 	}
 
 	.uni-steps__column-circle {
-		width: 5px;
-		height: 5px;
-		border-radius: 100px;
-		background-color: $uni-text-color-grey;
-		margin: 4px 0px 5px 0px;
+		height: 14px;
+		line-height: 14px;
+		margin: 2px 0px;
 	}
 
 	.uni-steps__row-check {

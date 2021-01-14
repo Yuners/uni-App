@@ -1,7 +1,7 @@
 <template>
 	<view class="homestay">
 		<view v-if="!loading">
-			<view class="stayItem" v-for="(item,index) of list" :key="index">
+			<view class="stayItem" v-for="(item,index) of list" :key="index" @tap="toNav(item.bedId)">
 				<view class="backImage">
 					<u-image :src="item.fileUrl" mode="scaleToFill" height="304" />
 				</view>
@@ -121,11 +121,11 @@
 					uni.stopPullDownRefresh();
 				}, 1000);
 			},
-			ruralSkip(id) {
+			toNav(id){
 				uni.navigateTo({
-					url: `/ruralPages/RuralDetails/index?id=${id}`,
-				});
-			},
+					url: `/ruralPages/particulars/bedDetails?id=${id}`
+				})
+			}
 		}
 	}
 </script>
@@ -139,6 +139,7 @@
 	}
 
 	.stayItem {
+		background-color: #FFFFFF;
 		padding: 30rpx;
 		padding-bottom: 53rpx;
 		border-bottom: 2rpx solid rgba(0, 0, 0, .1);

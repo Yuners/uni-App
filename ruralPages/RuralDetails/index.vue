@@ -86,6 +86,8 @@
 		},
 		onReachBottom() {
 			switch (this.active) {
+				case 0: 
+					break;
 				case 1:
 					this.$refs.landscape.loadMore()
 					break;
@@ -119,13 +121,8 @@
 					break;
 			}
 		},
-		methods: {
-			/**
-			 * tab切换
-			 * @param ind
-			 */
-			handTab(ind) {
-				this.active = ind
+		watch:{
+			active(ind){
 				switch (ind) {
 					case 1:
 						if(!this.landscape) return
@@ -148,6 +145,16 @@
 						this.$refs.specialty.getList()
 						break;
 				}
+			}
+		},
+		methods: {
+			/**
+			 * tab切换
+			 * @param ind
+			 */
+			handTab(ind) {
+				if(this.active == ind) return
+				this.active = ind
 			},
 			toJSON(){
 				return this

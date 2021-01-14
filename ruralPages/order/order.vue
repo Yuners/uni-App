@@ -19,7 +19,7 @@
 					@scrolltolower="loadData"
 				>
 					<!-- 空白页 -->
-					<fl-vacancy v-if="tabItem.loaded === true && tabItem.orderList.length === 0" />
+					<vacancy v-if="tabItem.loaded === true && tabItem.orderList.length === 0" />
 
 					<!-- 订单列表 -->
 					<view
@@ -71,7 +71,7 @@
 						</view>
 					</view>
 
-					<fl-load-more :status="tabItem.loadingType" />
+					<load-more :status="tabItem.loadingType" />
 
 				</scroll-view>
 			</swiper-item>
@@ -81,6 +81,9 @@
 
 <script>
 	import Json from '../../Json';
+	import LoadMore from '@/ruralPages/components/fl-load-more/index.vue'
+	import Vacancy from '@/ruralPages/components/fl-vacancy/index.vue'
+	
 	export default {
 		data() {
 			return {
@@ -136,7 +139,10 @@
 			// #endif
 
 		},
-
+		components:{
+			LoadMore,
+			Vacancy
+		},
 		methods: {
 			//获取订单列表
 			loadData(source){

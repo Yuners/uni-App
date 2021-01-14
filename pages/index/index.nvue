@@ -1,18 +1,77 @@
 <template>
 	<view class="content">
 		<!-- #ifndef APP-PLUS-NVUE -->
-		<map style="width:100%;height: 100%;" :polygons="polygons" :latitude="latitude" :longitude="longitude" :markers="covers"
-		 @markertap="markertap" />
-		 <!-- #endif -->
+		<map style="width:100%;height: 100%;" :scale="scale" :polygons="polygons" :latitude="latitude" :longitude="longitude"
+		 :markers="covers" @markertap="markertap" />
+		<!-- #endif -->
 		<!-- #ifdef APP-PLUS-NVUE -->
-		<map class="maps" :polygons="polygons" :latitude="latitude" :longitude="longitude" :markers="covers"
+		<map class="maps" :scale="scale" :polygons="polygons" :latitude="latitude" :longitude="longitude" :markers="covers"
 		 @markertap="markertap" />
-		 <!-- #endif -->
+		<!-- #endif -->
+		<!-- <u-popup v-model="show" closeable mode="bottom">
+			<view class="main">
+				<view class="header">
+					<view class="title">
+						六合园
+					</view>
+					<view class="subtitle">
+						乡村风景
+					</view>
+				</view>
+				<view class="wrap">
+					<u-swiper :list="list"></u-swiper>
+				</view>
+				<view class="describe">
+					哈就开始发哈市科技浩丰科技撒浩丰科技按时发空间安环科
+				</view>
+			</view>
+		</u-popup> -->
+		<uni-popup ref="popup" type="bottom">
+			<view class="main" v-if="detailData && loading">
+				<view class="header">
+					<view class="title">
+						<text class="titleItem">{{ detailData.name || '' }}</text>
+					</view>
+					<view class="subtitle">
+						<text class="subTiem">{{ detailData.typeName || '' }}</text>
+					</view>
+				</view>
+				<view class="wrap">
+					<view v-if="list && list.length">
+						<swiper indicator-dots class="swiper" autoplay>
+							<swiper-item class="" v-for="(item,index) in list" :key="index" @tap="toNav()">
+								<image class="itemImage" :src="item.fileUrl" mode="scaleToFill"></image>
+							</swiper-item>
+						</swiper>
+					</view>
+				</view>
+				<view class="describe">
+					<text class="describeItme">{{ detailData.describeContent || '' }}</text>
+				</view>
+			</view>
+			<view class="loading" v-else>
+				<!-- #ifndef APP-NVUE -->
+				<u-loading size="36" mode="flower"></u-loading>
+				<!-- #endif -->
+				<!-- #ifdef APP-NVUE -->
+				<text>加载中......</text>
+				<!-- #endif -->
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
 	import city from "@/city.js"
+	import {
+		getMarkers
+	} from "@/api/common.js"
+	import {
+		getSceneryDetail,
+		getFoodDetail,
+		getBedDetail
+	} from "@/api/villageDetails.js"
+	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 
 	export default {
 		data() {
@@ -21,75 +80,31 @@
 				title: 'map',
 				latitude: '',
 				longitude: '',
-				covers: [{
-					id: 1,
-					latitude: 30.12954,
-					longitude: 120.08769,
-					iconPath: '/static/images/sights.png',
-					width: 50,
-					height: 54,
-					callout: {
-						display: 'BYCLICK',
-						content: '风景',
-						padding: 10,
-						borderRadius: 5,
-					}
-				}, {
-					id: 2,
-					latitude: 30.26601,
-					longitude: 120.13991,
-					iconPath: '/static/images/food.png',
-					width: 50,
-					height: 54,
-					callout: {
-						display: 'BYCLICK',
-						content: '美食',
-						padding: 10,
-						borderRadius: 5,
-					}
-				}, {
-					id: 3,
-					latitude: 30.24559,
-					longitude: 120.16156,
-					iconPath: '/static/images/homestay.png',
-					width: 50,
-					height: 54,
-					callout: {
-						display: 'BYCLICK',
-						content: '住宿',
-						padding: 10,
-						borderRadius: 5,
-					}
-				}, {
-					id: 4,
-					latitude: 30.24979,
-					longitude: 120.16576,
-					iconPath: '/static/images/specialty.png',
-					width: 50,
-					height: 54,
-					callout: {
-						display: 'BYCLICK',
-						content: '特产',
-						padding: 10,
-						borderRadius: 5,
-					}
-				}, ],
+				scale: 16,
+				covers: [],
 				polygons: '',
+				markers: '',
+				show: true,
+				list: [],
+				detailData: '',
+				loading: false,
 			}
+		},
+		components: {
+			uniPopup,
 		},
 		onReady() {
 			this.polygons = [{
-					//多边形的坐标数组
-					points: city,
-					fillColor: "#ffb30020", //填充颜色
-					strokeColor: "#DC143C", //描边颜色
-					strokeWidth: 2, //描边宽度
-					zIndex: 1, //层级
-				}]
+				//多边形的坐标数组
+				points: city,
+				fillColor: "#ffb30020", //填充颜色
+				strokeColor: "#DC143C", //描边颜色
+				strokeWidth: 2, //描边宽度
+				zIndex: 1, //层级
+			}]
 		},
 		onLoad() {
 			let _this = this
-			console.log(this.polygons)
 			uni.getLocation({
 				type: 'wgs84',
 				success: function(res) {
@@ -97,25 +112,201 @@
 					_this.longitude = res.longitude
 				}
 			});
+			_this.getMarker()
 		},
 		methods: {
 			markertap(e) {
-				console.log(e)
+				let index = e.detail.markerId
+				let data = this.markers[index]
+				this.longitude = data.coordinate.lng
+				this.latitude = data.coordinate.lat
+				this.scale = 18
+				this.$refs.popup.open()
+				this.getDetail(data)
+			},
+			getMarker() {
+				getMarkers()
+					.then(res => {
+						if (res.data.code == '1') {
+							let data = JSON.parse(JSON.stringify(res.data.data))
+							let arr = []
+							data.map((item, index) => {
+								item.coordinate = JSON.parse(item.coordinate)
+								let b = {
+									id: index,
+									width: 50,
+									height: 54,
+									latitude: item.coordinate.lat,
+									longitude: item.coordinate.lng,
+									iconPath: `/static/images/${item.type}.png`
+								}
+								arr.push(b)
+							})
+							this.covers = this.covers.concat(arr)
+							this.markers = data
+						}
+					})
+					.catch(err => {})
+			},
+			getDetail(data) {
+				if (data.type == "scenery") {
+					let params = {
+						sceneryId: data.id
+					}
+					getSceneryDetail(params)
+						.then(res => {
+							if (res.data.code == '1') {
+								this.list = JSON.parse(JSON.stringify(res.data.data.sceneryDescribeList))
+								let data = JSON.parse(JSON.stringify(res.data.data.scenery))
+								this.detailData = {
+									id: data.sceneryId,
+									type: 'scenery',
+									name: data.sceneryName,
+									typeName: '乡村风景',
+									describeContent: data.describeContent
+								}
+							}
+							this.loading = true
+						})
+						.catch(err => {})
+				} else if (data.type == "food") {
+					let params = {
+						foodId: data.id
+					}
+					getFoodDetail(params)
+						.then(res => {
+							if (res.data.code == '1') {
+								this.list = JSON.parse(JSON.stringify(res.data.data.foodDescribeList))
+								let data = JSON.parse(JSON.stringify(res.data.data.food))
+								this.detailData = {
+									id: data.foodId,
+									type: 'food',
+									name: data.foodName,
+									typeName: '乡村美食',
+									describeContent: data.describeContent
+								}
+							}
+							this.loading = true
+						})
+						.catch(err => {})
+				} else if (data.type == "bed") {
+					let params = {
+						bedId: data.id
+					}
+					getBedDetail(params)
+						.then(res => {
+							if (res.data.code == '1') {
+								this.list = JSON.parse(JSON.stringify(res.data.data.bedDescribeList))
+								let data = JSON.parse(JSON.stringify(res.data.data.bed))
+								this.detailData = {
+									id: data.bedId,
+									type: 'bed',
+									name: data.bedName,
+									typeName: '乡村民宿',
+									describeContent: data.describeContent
+								}
+							}
+							this.loading = true
+						})
+						.catch(err => {})
+				} else if (data.type == "specialty") {
+					let params = {
+						specialtyId: data.id
+					}
+				}
+			},
+			toNav() {
+				switch (this.detailData.type) {
+					case 'scenery':
+						uni.navigateTo({
+							url: `/ruralPages/particulars/sceneryDetails?id=${this.detailData.id}`
+						})
+						break;
+					case 'food':
+						uni.navigateTo({
+							url: `/ruralPages/particulars/foodDetails?id=${this.detailData.id}`
+						})
+						break;
+					case 'bed':
+						uni.navigateTo({
+							url: `/ruralPages/particulars/bedDetails?id=${this.detailData.id}`
+						})
+						break;
+				}
 			}
 		}
 	}
 </script>
 
-<style>
+<style scoped>
 	.content {
 		height: 100%;
 		/* #ifdef APP-PLUS-NVUE */
 		flex: 1;
 		/* #endif */
 	}
-		/* #ifdef APP-PLUS-NVUE */
-	.maps{
+
+	/* #ifdef APP-PLUS-NVUE */
+	.maps {
 		flex: 1;
+		flex-direction: row;
 	}
+
+	/* #endif */
+
+	.main {
+		/* #ifndef APP-NVUE */
+		display: flex;
 		/* #endif */
+		padding: 20rpx 34rpx;
+		background-color: #FFFFFF;
+	}
+
+	.loading {
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		height: 450rpx;
+		background-color: #FFFFFF;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.title {
+		padding: 17rpx 0;
+	}
+
+	.titleItem {
+		font-size: 38rpx;
+		color: #333333;
+		font-weight: bold;
+	}
+
+	.subTiem {
+		font-size: 28rpx;
+		color: #999999;
+	}
+
+	.wrap {
+		padding: 0 30rpx;
+		margin-top: 14rpx;
+	}
+
+	/* #ifndef APP-PLUS-NVUE */
+	.itemImage {
+		width: 100%;
+		height: 100%;
+	}
+
+	/* #endif */
+
+	.describe {
+		margin-top: 20rpx;
+		padding: 14rpx;
+	}
+
+	.describeItme {
+		color: #333333;
+		font-size: 32rpx;
+	}
 </style>

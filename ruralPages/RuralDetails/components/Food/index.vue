@@ -1,7 +1,7 @@
 <template>
 	<view class="food">
 		<view v-if="!loading">
-			<view class="list_item" v-for="(item,index) of list" :key="index">
+			<view class="list_item" v-for="(item,index) of list" :key="index" @tap="toNav(item.foodId)">
 				<view class="item_image">
 					<u-image :src="item.fileUrl" mode="scaleToFill" width="100%" height="180" border-radius="5">
 						<view slot="error" style="font-size: 24rpx;">图片加载失败</view>
@@ -116,8 +116,10 @@
 					uni.stopPullDownRefresh();
 				}, 1000);
 			},
-			scapeDetails() {
-				console.log()
+			toNav(id) {
+				uni.navigateTo({
+					url: `/ruralPages/particulars/foodDetails?id=${id}`
+				})
 			}
 		}
 	}
@@ -139,6 +141,7 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
+			margin-bottom: 30rpx;
 
 			.item_image {
 				flex: 1;
@@ -157,7 +160,10 @@
 					font-size: 32rpx;
 					color: #333333;
 					font-weight: bold;
+					display: -webkit-box;
 					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
 				}
 
 				.feature {
@@ -177,11 +183,11 @@
 
 				.item_about {
 					font-size: 24rpx;
-					padding: 16rpx;
 					display: -webkit-box;
 					-webkit-line-clamp: 2;
 					overflow: hidden;
 					text-overflow: ellipsis;
+					line-height: 1.8;
 					-webkit-box-orient: vertical;
 				}
 			}

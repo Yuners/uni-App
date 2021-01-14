@@ -75,7 +75,6 @@ http.interceptors.response.use(
 			} catch (err) {
 				console.error("响应拦截:", err);
 			} */
-			console.log(response)
 			return response.data;
 		},
 		response => {

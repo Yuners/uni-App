@@ -1,5 +1,6 @@
 import Vue from "vue"
 import Vuex from "vuex"
+import { getAddress } from '@/api/address.js'
 
 Vue.use(Vuex)
 
@@ -34,22 +35,45 @@ const store = new Vuex.Store({
         ],
 		// 网络状态，用于下载提醒
 		networkState: 'unknown',
+		profileList: []
     },
 
 	getters:{
-		
 		// 获取网络状态
 		networkStatus: state => {
 			return state.networkState;
 		},
+		// 获取收货地址
+		profile: state => {
+			return state.profileList
+		},
+		// 默认地址
+		defAddress: state => {
+			if (!state.profileList.length) return ''
+			return state.profileList[0]
+		}
 	},
 
     mutations:{
-
+		SET_PROFILE: (state, list) => {
+			state.profileList = list
+		}
     },
 
     actions:{
-
+		getProfile({ commit }) {
+			return new Promise( (resolve, reject) => {
+				getAddress()
+					.then( res => {
+						commit('SET_PROFILE', res.data)
+						resolve()
+					})
+					.catch( err => {
+						console.log(err)
+						reject(err)
+					})
+			})
+		}
     }
 
 })

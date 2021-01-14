@@ -132,7 +132,7 @@
 			bottom: 0;
 			left: 0;
 			width: 100%;
-			height: 112rpx;
+			height: 120rpx;
 			padding: 0 30rpx;
 			background: rgba(0, 0, 0, .8);
 
@@ -155,6 +155,13 @@
 				text {
 					color: #ffffff;
 					font-size: 24rpx;
+					text-overflow: -o-ellipsis-lastline;
+					  overflow: hidden;
+					  text-overflow: ellipsis;
+					  display: -webkit-box;
+					  -webkit-line-clamp: 2;
+					  line-clamp: 2;
+					  -webkit-box-orient: vertical;
 				}
 			}
 		}

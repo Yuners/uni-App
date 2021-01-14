@@ -1,7 +1,41 @@
 <template>
-	<view class="content">
-		<map style="width: 100vw; height: 100v;" :polygons="polygons" :latitude="latitude" :longitude="longitude" :markers="covers"
-		 @markertap="markertap" />
+	<view>
+		<view class="uni-padding-wrap">
+			<view class="page-section swiper">
+				<view class="page-section-spacing">
+					<swiper class="swiper" :current="itemId" :autoplay="autoplay" :interval="interval" :duration="duration" @change="intervalChange">
+						<swiper-item>
+							<view class="swiper-item uni-bg-red">
+								<scroll-view scroll-x class="scroll-box">
+									<image src="../../static/images/2.jpg" mode="scaleToFill"></image>
+									<image src="../../static/images/2.jpg" mode="scaleToFill"></image>
+									<image src="../../static/images/2.jpg" mode="scaleToFill"></image>
+									<image src="../../static/images/2.jpg" mode="scaleToFill"></image>
+									<image src="../../static/images/2.jpg" mode="scaleToFill"></image>
+									<image src="../../static/images/2.jpg" mode="scaleToFill"></image>
+								</scroll-view>
+							</view>
+						</swiper-item>
+						<swiper-item>
+							<view class="swiper-item uni-bg-green">B</view>
+						</swiper-item>
+						<swiper-item>
+							<view class="swiper-item uni-bg-blue">C</view>
+						</swiper-item>
+					</swiper>
+				</view>
+			</view>
+			<view class="dots">
+				<view class="dotsItem" :class="{action: index == itemId}" v-for="(item,index) of 3" :key="index" @tap="dotTap(index)">
+					{{ index + 1 }}
+				</view>
+			</view>
+		</view>
+		<scroll-view class="scroll-view_H" scroll-x="true">
+			<view id="demo1" class="scroll-view-item_H uni-bg-red">A</view>
+			<view id="demo2" class="scroll-view-item_H uni-bg-green">B</view>
+			<view id="demo3" class="scroll-view-item_H uni-bg-blue">C</view>
+		</scroll-view>
 	</view>
 </template>
 
@@ -11,97 +45,52 @@
 	export default {
 		data() {
 			return {
-				id: 0, // 使用 marker点击事件 需要填写id
-				title: 'map',
-				latitude: '',
-				longitude: '',
-				covers: [{
-					id: 1,
-					latitude: 30.12954,
-					longitude: 120.08769,
-					iconPath: '/static/images/sights.png',
-					width: 50,
-					height: 54,
-					callout: {
-						display: 'BYCLICK',
-						content: '风景',
-						padding: 10,
-						borderRadius: 5,
-					}
-				}, {
-					id: 2,
-					latitude: 30.26601,
-					longitude: 120.13991,
-					iconPath: '/static/images/food.png',
-					width: 50,
-					height: 54,
-					callout: {
-						display: 'BYCLICK',
-						content: '美食',
-						padding: 10,
-						borderRadius: 5,
-					}
-				}, {
-					id: 3,
-					latitude: 30.24559,
-					longitude: 120.16156,
-					iconPath: '/static/images/homestay.png',
-					width: 50,
-					height: 54,
-					callout: {
-						display: 'BYCLICK',
-						content: '住宿',
-						padding: 10,
-						borderRadius: 5,
-					}
-				}, {
-					id: 4,
-					latitude: 30.24979,
-					longitude: 120.16576,
-					iconPath: '/static/images/specialty.png',
-					width: 50,
-					height: 54,
-					callout: {
-						display: 'BYCLICK',
-						content: '特产',
-						padding: 10,
-						borderRadius: 5,
-					}
-				}, ],
-				polygons: ''
+				background: ['color1', 'color2', 'color3'],
+				autoplay: false,
+				interval: 4000,
+				duration: 400,
+				itemId: 0
 			}
 		},
-		onReady() {
-			this.polygons = [{
-					//多边形的坐标数组
-					points: city,
-					fillColor: "#ffb30020", //填充颜色
-					strokeColor: "#DC143C", //描边颜色
-					strokeWidth: 2, //描边宽度
-					zIndex: 1, //层级
-				}]
-		},
-		onLoad() {
-			let _this = this
-			console.log(this.polygons)
-			uni.getLocation({
-				type: 'wgs84',
-				success: function(res) {
-					_this.latitude = res.latitude
-					_this.longitude = res.longitude
-				}
-			});
-		},
+		onReady() {},
+		onLoad() {},
 		methods: {
-			markertap(e) {
-				console.log(e)
+			intervalChange(e) {
+				this.itemId = e.detail.current
+			},
+			dotTap(index) {
+				this.itemId = index
 			}
 		}
 	}
 </script>
 
-<style>
-	.content {
-		height: 100vh;
+<style lang="scss" scoped>
+	.scroll-box {
+		width: 100%;
+		white-space: nowrap;
+
+		image {
+			width: 110px;
+			height: 200rpx;
+		}
+	}
+	.uni-bg-red{
+		background-color: red;
+	}
+	.uni-bg-green{
+		background-color: green;
+		
+	}
+	.uni-bg-blue{
+		background-color: blue;
+	}
+	.scroll-view_H{
+		white-space: nowrap;
+		width: 100%;
+	}
+	.scroll-view-item_H{
+		display: inline-block;
+		width: 100%;
 	}
 </style>

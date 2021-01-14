@@ -21,7 +21,7 @@
 				</view>
 			</view>
 			<view class="stepsMain">
-				<uni-steps :options="options" direction="row" :active="0" />
+				<steps :options="options" direction="row" :active="2" />
 			</view>
 		</view>
 		<view class="describe">
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-	import uniSteps from '@/components/uni-steps/uni-steps.vue'
+	import Steps from "@/ruralPages/components/fl-steps/index.vue"
 
 	export default {
 		data() {
@@ -75,8 +75,8 @@
 				}]
 			}
 		},
-		components: {
-			uniSteps
+		components:{
+			Steps
 		},
 		methods: {
 			navTo(url) {

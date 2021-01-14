@@ -1,3 +1,3 @@
 module.exports = {
-	baseApiUrl:'http://192.168.31.252:10209/'
+	baseApiUrl:'http://192.124.1.57:5021/'
 }
