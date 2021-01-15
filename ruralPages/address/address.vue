@@ -24,15 +24,17 @@
 </template>
 
 <script>
-	import store from "@/store/index.js"
+	import { mapGetters } from 'vuex'
 
 
 	export default {
 		data() {
 			return {
 				source: 0,
-				addressList: store.getters.profile
 			}
+		},
+		computed: {
+			...mapGetters(['addressList'])
 		},
 		onLoad(option) {
 			console.log(option.source);
@@ -42,6 +44,7 @@
 			//选择地址
 			checkAddress(item) {
 				if (this.source == 1) {
+					this.$prePage().selectAddress(item)
 					uni.navigateBack()
 				}
 			},

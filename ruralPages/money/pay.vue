@@ -1,39 +1,42 @@
 <template>
 	<view class="app">
 		<view class="price-box">
+			<view class="payTime">
+				<view class="hint">
+					订单提交成功
+				</view>
+				<view class="times">
+					请在
+					<timer v-if="startTime && pastDueTime" :start="startTime" :finish="pastDueTime" />内完成支付
+				</view>
+			</view>
 			<text>支付金额</text>
-			<text class="price">38.88</text>
+			<text class="price">{{ payPrice }}</text>
 		</view>
 
 		<view class="pay-type-list">
 
 			<view class="type-item b-b" @click="changePayType(1)">
-				<text class="icon yticon icon-weixinzhifu"></text>
+				<view class="icon">
+					<u-icon name="zhifubao" color="#01aaef" size="48"></u-icon>
+				</view>
 				<view class="con">
-					<text class="tit">微信支付</text>
-					<text>推荐使用微信支付</text>
+					<text class="tit">支付宝支付</text>
+					<text>推荐使用支付宝支付</text>
 				</view>
 				<label class="radio">
 					<radio value="" color="#4FAA81" :checked='payType == 1' />
 				</label>
 			</view>
 			<view class="type-item b-b" @click="changePayType(2)">
-				<text class="icon yticon icon-alipay"></text>
+				<view class="icon">
+					<u-icon name="weixin-fill" color="#36cb59" size="48"></u-icon>
+				</view>
 				<view class="con">
-					<text class="tit">支付宝支付</text>
+					<text class="tit">微信支付</text>
 				</view>
 				<label class="radio">
 					<radio value="" color="#4FAA81" :checked='payType == 2' />
-				</label>
-			</view>
-			<view class="type-item" @click="changePayType(3)">
-				<text class="icon yticon icon-erjiye-yucunkuan"></text>
-				<view class="con">
-					<text class="tit">预存款支付</text>
-					<text>可用余额 ¥198.5</text>
-				</view>
-				<label class="radio">
-					<radio value="" color="#4FAA81" :checked='payType == 3' />
 				</label>
 			</view>
 		</view>
@@ -43,24 +46,89 @@
 </template>
 
 <script>
+	import Timer from "@/ruralPages/components/fl-timer/fl-timer.vue"
+	import { payment, confirmPay } from "@/api/order.js"
 
 	export default {
 		data() {
 			return {
 				payType: 1,
-				orderInfo: {}
+				orderId: '',
+				payPrice: 0,
+				startTime: 0,
+				pastDueTime: 0,
+			}
+		},
+		components: {
+			Timer
+		},
+		onLoad(option) {
+			if (option) {
+				this.orderId = Number(option.orderId)
+				this.payPrice = Number(option.payPrice)
+				this.startTime = new Date().getTime()
+				this.pastDueTime = option.createTime * 1000 + 60 * 60 * 1000
 			}
 		},
 		methods: {
+			// 唤起支付
+			openPayment(type,info){
+				let _this = this
+				uni.requestPayment({
+				    provider: type,
+				    orderInfo: info, //微信、支付宝订单数据
+				    success: function (res) {
+						let params = {
+							reqOrderId: _this.orderId,
+							plantPayFlag: _this.payType,
+							payType: 1,
+						}
+						confirmPay(params)
+							.then( res => {
+								console.log(res)
+							})
+						_this.$msg('支付成功')
+						setTimeout( _ => {
+							uni.redirectTo({
+								url: '/ruralPages/money/paySuccess'
+							})
+						}, 1000)
+				    },
+				    fail: function (err) {
+						_this.$msg('支付失败')
+						console.log(err)
+				    }
+				});
+			},
 			//选择支付方式
 			changePayType(type) {
 				this.payType = type;
 			},
 			//确认支付
 			confirm: async function() {
-				uni.redirectTo({
-					url: '/ruralPages/money/paySuccess'
-				})
+				let params = {
+					reqOrderId: this.orderId,
+					plantPayFlag: this.payType,
+					payType: 1,
+				}
+				payment(params)
+					.then( res => {
+						if ( res.data.code == 1 ) {
+							let data = res.data.data
+							console.log(data)
+							uni.getProvider({
+								service: 'payment',
+								success: (res) => {
+									if (~res.provider.indexOf('alipay') && this.payType == 1){
+										this.openPayment('alipay', data.payStr)
+									}
+								}
+							});
+						}
+					})
+					.catch( err => {
+						console.log(err)
+					})
 			},
 		}
 	}
@@ -81,11 +149,27 @@
 		font-size: 28upx;
 		color: #909399;
 
-		.price{
+		.payTime {
+			text-align: center;
+
+			.hint {
+				font-size: 36rpx;
+				margin-bottom: 20rpx;
+			}
+
+			.times {
+				display: flex;
+				font-size: 32rpx;
+				margin-bottom: 20rpx;
+			}
+		}
+
+		.price {
 			font-size: 50upx;
 			color: #303133;
 			margin-top: 12upx;
-			&:before{
+
+			&:before {
 				content: '￥';
 				font-size: 40upx;
 			}
@@ -97,7 +181,7 @@
 		background-color: #fff;
 		padding-left: 60upx;
 
-		.type-item{
+		.type-item {
 			height: 120upx;
 			padding: 20upx 0;
 			display: flex;
@@ -105,28 +189,21 @@
 			align-items: center;
 			padding-right: 60upx;
 			font-size: 30upx;
-			position:relative;
+			position: relative;
 		}
 
-		.icon{
+		.icon {
 			width: 100upx;
 			font-size: 52upx;
 		}
-		.icon-erjiye-yucunkuan {
-			color: #fe8e2e;
-		}
-		.icon-weixinzhifu {
-			color: #36cb59;
-		}
-		.icon-alipay {
-			color: #01aaef;
-		}
-		.tit{
+
+		.tit {
 			font-size: $font-lg;
 			color: $font-color-dark;
 			margin-bottom: 4upx;
 		}
-		.con{
+
+		.con {
 			flex: 1;
 			display: flex;
 			flex-direction: column;
@@ -134,6 +211,7 @@
 			color: $font-color-light;
 		}
 	}
+
 	.mix-btn {
 		display: flex;
 		align-items: center;
@@ -147,5 +225,4 @@
 		border-radius: 10upx;
 		box-shadow: 1px 2px 5px rgba(69, 201, 77, 0.4);
 	}
-
 </style>

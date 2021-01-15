@@ -51,14 +51,14 @@
 					ressDistrict: '',
 					ressCityCode: '',
 					ressProvinceCode: '',
-					isDefault: true
+					isDefault: false
 				},
 				addressId: ''
 			}
 		},
 		computed:{
 			color(){
-				return this.addressData.default ? '#4FAA81' : '#dfdfdf'
+				return this.addressData.isDefault ? '#4FAA81' : '#dfdfdf'
 			}
 		},
 		onLoad(option){
@@ -68,9 +68,10 @@
 				let a = JSON.parse(option.data)
 				this.addressId = a.ressId
 				for (let key in this.addressData) {
-					if (!a[key]) return
+					if (!a[key]) continue
 					this.addressData[key] = a[key]
 				}
+				console.log(this.addressData)
 			}
 			this.manageType = option.type;
 			uni.setNavigationBarTitle({
@@ -79,7 +80,7 @@
 		},
 		methods: {
 			switchChange(e){
-				this.addressData.isDefault = e.detail;
+				this.addressData.isDefault = e.detail.value;
 			},
 
 			//地图选择地址
@@ -99,7 +100,7 @@
 				}
 				getAddressDetails(params)
 					.then( res => {
-						if ( res.code == 200 ) {
+						if ( res.code == 1 ) {
 							let dat = res.data
 							this.addressData.ressLocation = dat.formattedAddress
 							this.addressData.ressDetail = dat.smallAddress

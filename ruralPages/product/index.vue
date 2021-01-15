@@ -475,6 +475,17 @@
 						console.log(err)
 					})
 			},
+			// 选择地址回调
+			selectAddress(data) {
+				uni.showLoading({
+				    title: '加载中'
+				});
+				this.defAddress = data
+				this.freightInfo = this.imputedPrice()
+				setTimeout(function () {
+				    uni.hideLoading();
+				}, 1000);
+			},
 			//规格弹窗开关
 			toggleSpec() {
 				if (this.specClass === 'show') {

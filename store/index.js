@@ -44,7 +44,8 @@ const store = new Vuex.Store({
 			return state.networkState;
 		},
 		// 获取收货地址
-		profile: state => {
+		addressList: state => {
+			console.log(state.profileList)
 			return state.profileList
 		},
 		// 默认地址

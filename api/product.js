@@ -8,10 +8,3 @@ import host from "./serve/jxy.js"
 export function getDetails(params){
 	return request.get( host.jxy + '/specialty/getSpecialtyDetailApp', { params })
 }
-/**
- * 用户下单
- * @param {Object} params
- */
-export function placeOrder(params){
-	return request.post( host.order + '/order/addOrder', params)
-}

@@ -85,7 +85,9 @@
 				<text class="price-tip">￥</text>
 				<text class="price">{{ totalPrice }}</text>
 			</view>
-			<u-button type="success" :disabled="postage == -1 ? true : false" @click="submit">提交订单</u-button>
+			<view class="submit">
+				<u-button type="success" :disabled="postage == -1 ? true : false" @click="submit">提交订单</u-button>
+			</view>
 		</view>
 
 		<!-- 优惠券面板 -->
@@ -117,9 +119,9 @@
 
 <script>
 	import {
-		getDetails,
-		placeOrder
+		getDetails
 	} from '@/api/product.js'
+	import { placeOrder } from "@/api/order.js"
 	import store from "@/store/index.js"
 
 
@@ -189,6 +191,7 @@
 						this.loading = true
 					})
 			},
+			// 计算邮费
 			imputedPrice() {
 				let city = this.defAddress.ressProvinceId
 				let spec = this.specSelected
@@ -197,8 +200,9 @@
 				let amount = 0
 				if (freight.freightNotDistribution.indexOf(city) == -1) {
 					if (freight.freightIsAllFree != 1) {
+						
 						let condition = this.selectArray(city, freight.freightParcelList, 'parcelRegionId')
-						if (condition && (condition.parcelPrice <= spec.price * spec.shopNumber && condition.parcelWeight <= spec.shopNumber)) {
+						if (condition && condition.parcelPrice <= parseFloat((spec.price * spec.shopNumber).toFixed(10)) && condition.parcelWeight <= spec.shopNumber) {
 							amount = 0
 						} else {
 							let region = this.selectArray(city, freight.freightDistributionList, 'distributionRegionId')
@@ -222,8 +226,8 @@
 				if (a.shopNumber < b.distributionFirstWeight) {
 					money = b.distributionFirstPrice
 				} else {
-					money = b.distributionFirstPrice + Math.ceil((a.shopNumber - b.distributionFirstWeight) / b.distributionContinuationWeight) *
-						b.distributionContinuationPrice
+					money = b.distributionFirstPrice + parseFloat((Math.ceil((a.shopNumber - b.distributionFirstWeight) / b.distributionContinuationWeight) *
+						b.distributionContinuationPrice).toFixed(10))
 				}
 				return money
 			},
@@ -243,11 +247,16 @@
 					this.maskState = state;
 				}, timer)
 			},
-			numberChange(data) {
-				this.number = data.number;
-			},
-			changePayType(type) {
-				this.payType = type;
+			// 选择地址回调
+			selectAddress(data) {
+				uni.showLoading({
+				    title: '加载中'
+				});
+				this.defAddress = data
+				this.postage = this.imputedPrice()
+				setTimeout(function () {
+				    uni.hideLoading();
+				}, 1000);
 			},
 			submit() {
 				if (this.postage == -1) return
@@ -265,14 +274,19 @@
 				}
 				placeOrder(params)
 					.then( res => {
-						console.log(res)
+						if( res.data.code == 1 ){
+							console.log(res.data.data)
+							let orderId = res.data.data.id
+							let payPrice = res.data.data.payPrice
+							let createTime = res.data.data.addTime
+							uni.redirectTo({
+								url: `/ruralPages/money/pay?orderId=${orderId}&payPrice=${payPrice}&createTime=${createTime}`
+							})
+						}
 					})
 					.catch( err => {
 						console.log(err)
 					})
-				/* uni.redirectTo({
-					url: '/ruralPages/money/pay'
-				}) */
 			},
 			stopPrevent() {}
 		}
@@ -600,15 +614,6 @@
 			justify-content: center;
 			width: 280upx;
 			height: 100%;
-			color: #fff;
-			font-size: 32upx;
-			background-color: $price-related;
-
-			&.forbid {
-				background-color: #fff;
-				border-color: #ebeef5;
-				background-image: none;
-			}
 		}
 	}
 
