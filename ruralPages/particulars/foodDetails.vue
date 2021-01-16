@@ -129,7 +129,7 @@
 										<view class="swiper-item uni-bg-red">
 											<scroll-view scroll-x class="scroll-box">
 												<view class="scrollMain">
-													<view v-for="(res,ind) in item.list" :key="ind" class="scroll_item">
+													<view v-for="(res,ind) in item.list" :key="ind" class="scroll_item" @tap="toDetails(res,item.type)">
 														<u-image border-radius="10" width="100%" height="150" :src="res.fileUrl" />
 														<view class="resName">
 															{{ nameType(res,item.type) }}
@@ -335,7 +335,42 @@
 					})
 				})
 			},
-			toNav(){}
+			toNav() {
+				const id = this.itemId
+					switch (id) {
+						case 0:
+							this.$prePage().active = 1
+							uni.navigateBack()
+							break;
+						case 1:
+							this.$prePage().active = 2
+							uni.navigateBack()
+							break;
+						case 2:
+							this.$prePage().active = 3
+							uni.navigateBack()
+							break;
+					}
+			},
+			toDetails(data, type) {
+				switch (type) {
+					case '风景':
+						uni.navigateTo({
+							url: `/ruralPages/particulars/sceneryDetails?id=${data.sceneryId}`
+						})
+						break;
+					case '美食':
+						uni.navigateTo({
+							url: `/ruralPages/particulars/foodDetails?id=${data.foodId}`
+						})
+						break;
+					case '民宿':
+						uni.navigateTo({
+							url: `/ruralPages/particulars/bedDetails?id=${data.bedId}`
+						})
+						break;
+				}
+			}
 		},
 		onPageScroll(e) {
 			let scrollTop = e.scrollTop;
@@ -519,7 +554,7 @@
 
 					.article {
 						font-size: $font-base;
-						color: $font-color-spec;
+						color: $color-black;
 						text-indent: 40upx;
 						padding-bottom: 20rpx;
 					}

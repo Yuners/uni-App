@@ -6,6 +6,7 @@
 import Request from "luch-request";
 import config from "@/config";
 import store from "@/store";
+import { getToken } from '@/utils/auth.js'
 
 let count = 1;
 
@@ -21,19 +22,13 @@ const http = new Request({
  */
 http.interceptors.request.use(
 	async config => {
-			/* let token = null;
+			let token = null;
 
-			try {
-				token = uni.getStorageSync("token");
-			} catch (err) {
-				console.error("请求拦截：", err);
+			token = getToken();
+
+			if(token){
+				config.header['X-Token'] = token
 			}
-
-			token &&
-				(config.header = {
-					...console.header,
-					Authorization: "Bearer " + token,
-				}); */
 
 			return config;
 		},
@@ -75,7 +70,12 @@ http.interceptors.response.use(
 			} catch (err) {
 				console.error("响应拦截:", err);
 			} */
-			return response.data;
+			const res = response.data
+			if (res.code == 1 || res.code == 200){
+				return res
+			} else {
+				return Promise.reject(new Error(res.msg || 'Error'))
+			}
 		},
 		response => {
 			return Promise.reject(response);

@@ -69,7 +69,7 @@
 			</view> -->
 			<view class="c-row b-b" @tap="toNav">
 				<text class="tit">邮费说明</text>
-				<view class="con">
+				<view class="con" v-if="defAddress">
 					<view>
 						{{ freightInfo }}
 					</view>
@@ -81,6 +81,9 @@
 							{{ defAddress.ressLocation.replace(defAddress.ressDetail, '') }}
 						</text>
 					</view>
+				</view>
+				<view class="con" v-else>
+					请选择收货地址
 				</view>
 				<u-icon name="arrow-right" color="#888" size="24"></u-icon>
 			</view>
@@ -298,6 +301,9 @@
 	} from '@/api/address.js'
 	import Share from "@/ruralPages/components/fl-share/index.vue"
 	import store from "@/store/index.js"
+	import {
+		mapGetters
+	} from 'vuex'
 
 	export default {
 		data() {
@@ -358,7 +364,10 @@
 					return inventory + item.specsNumber
 				}, 0)
 				return num
-			}
+			},
+			...mapGetters([
+				'isLogin'
+			])
 		},
 		components: {
 			Share
@@ -378,6 +387,8 @@
 				}
 			},
 			imputedPrice() {
+				console.log(this.defAddress)
+				if (!this.defAddress) return
 				let city = this.defAddress.ressProvinceId
 				let freight = JSON.parse(JSON.stringify(this.freightData))
 				freight.freightNotDistribution = JSON.parse(freight.freightNotDistribution)
@@ -459,15 +470,16 @@
 							this.productData = data
 							this.imgList = this.imgList.concat(data.fileUrlList)
 							this.specList = JSON.parse(JSON.stringify(data.specsList))
-							if (this.specList.length < 2) return
-							let compare = () => {
-								return function(a, b) {
-									return a.specsPrice - b.specsPrice
+							if (!(this.specList.length < 2)){
+								let compare = () => {
+									return function(a, b) {
+										return a.specsPrice - b.specsPrice
+									}
 								}
+								this.specList.sort(compare())
 							}
-							this.specList.sort(compare())
+							this.freightInfo = this.imputedPrice()
 						}
-						this.freightInfo = this.imputedPrice()
 						this.loading = true
 					})
 					.catch(err => {
@@ -521,21 +533,39 @@
 				this.favorite = !this.favorite;
 			},
 			toNav(){
-				uni.navigateTo({
-					url: '/ruralPages/address/address?source=1'
-				})
+				if (!this.isLogin) {
+					this.$msg('用户未登录')
+					setTimeout( () => {
+						uni.navigateTo({
+							url: '/pages/login/login'
+						})
+					}, 500)
+				} else {
+					uni.navigateTo({
+						url: '/ruralPages/address/address?source=1'
+					})
+				}
 			},
 			buy() {
-				if (!this.specSelected) {
-					this.$msg('请选择规格后提交')
-					setTimeout(() => {
-						this.toggleSpec()
+				if (!this.isLogin) {
+					this.$msg('用户未登录')
+					setTimeout( () => {
+						uni.navigateTo({
+							url: '/pages/login/login'
+						})
 					}, 1000)
-					return
+				} else {
+					if (!this.specSelected) {
+						this.$msg('请选择规格后提交')
+						setTimeout(() => {
+							this.toggleSpec()
+						}, 1000)
+						return
+					}
+					uni.navigateTo({
+						url: `/ruralPages/order/createOrder?id=${this.specialtyId}&specSelected=${JSON.stringify(this.specSelected)}`
+					})
 				}
-				uni.navigateTo({
-					url: `/ruralPages/order/createOrder?id=${this.specialtyId}&specSelected=${JSON.stringify(this.specSelected)}`
-				})
 			},
 			stopPrevent() {}
 		},

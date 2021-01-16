@@ -38,7 +38,7 @@
 				:clearable="false"
 			>
 				<u-icon name="lock" slot="icon" size="40"></u-icon>
-				<switch class="detail" slot="right" :checked="passwordShow" color="#4FAA81" @change="switchChange" />
+				<switch class="detail" slot="right" :checked="passwordShow" :color="passwordShow ? '#4FAA81' : '#dcdfe6'" @change="switchChange" />
 			</u-field>
 		</view>
 		<view class="skip">
@@ -48,7 +48,7 @@
 			我已阅读并同意《用户服务协议》
 		</view>
 		<view class="push-button">
-			<view class="loginSub">
+			<view class="loginSub" @tap="submit">
 				确认
 			</view>
 		</view>
@@ -56,11 +56,14 @@
 </template>
 
 <script>
+	import { sendCode, register } from "@/api/user.js"
+	
 	export default {
 		data() {
 			return {
 				phoneNumber:'',
 				password:'',
+				smsSecret: '',
 				passwordShow:false,
 				fieldStyle:{
 					fontSize:'30rpx'
@@ -74,27 +77,91 @@
 			switchChange(e){
 				this.passwordShow = e.detail.value
 			},
-			navTo(url){
-				uni.navigateTo({
-					url
+			navTo(){
+				uni.redirectTo({
+				    url: '/pages/login/login'
 				})
 			},
 			codeChange(text) {
 				this.codeText = text;
 			},
+			// 注册
+			submit(){
+				if (!this.phoneNumber){
+					this.$msg('请输入手机号码');
+					return
+				}
+				if(!/(^1[3|4|5|7|8][0-9]{9}$)/.test(this.phoneNumber)){
+					this.$msg('请输入正确的手机号码');
+					return;
+				}
+				if (!this.code){
+					this.$msg('请输入短信验证码');
+					return
+				}
+				if (!this.password){
+					this.$msg('请输入登录密码');
+					return
+				}
+				if (!this.protocol){
+					this.$msg('请先同意用户服务协议');
+					return
+				}
+				
+				uni.showLoading({
+					title: '注册中...'
+				})
+				
+				let params = {
+					phone: this.phoneNumber,
+					password: this.password,
+					code: this.code,
+					smsSecret: this.smsSecret,
+					userOwnershipSystemId: 3
+				}
+				register(params)
+					.then( res => {
+						uni.hideLoading()
+						this.$msg('注册成功');
+						setTimeout( () => {
+							this.navTo()
+						},500)
+					})
+					.catch( err => {
+						console.log(err)
+						this.$msg('注册中发生错误');
+					})
+			},
+			// 获取验证码
 			getCode() {
+				if (!this.phoneNumber){
+					this.$msg('请填写手机号码');
+					return
+				}
+				if(!/(^1[3|4|5|7|8][0-9]{9}$)/.test(this.phoneNumber)){
+					this.$msg('请输入正确的手机号码');
+					return;
+				}
 				if(this.$refs.uCode.canGetCode) {
 					// 模拟向后端请求验证码
 					uni.showLoading({
 						title: '正在获取验证码'
 					})
-					setTimeout(() => {
-						uni.hideLoading();
-						// 通知验证码组件内部开始倒计时
-						this.$refs.uCode.start();
-					}, 1000);
+					let params = {
+						phone: this.phoneNumber,
+						codeType: 4
+					}
+					sendCode(params)
+						.then( res => {
+							this.smsSecret = res.data.smsSecret
+							this.$refs.uCode.start();
+							uni.hideLoading()
+						})
+						.catch( err => {
+							this.$msg('发送验证码失败');
+						})
 				}else {
-					this.$u.toast('倒计时结束后再发送');
+					this.$msg('倒计时结束后再发送');
 				}
 			},
 			proto(){

@@ -1,13 +1,7 @@
 <template>
 	<view class="particulars">
-		<u-navbar :is-back="true"
-			back-icon-color="#ffffff"
-			:title-color="titleColor"
-			:title="partData.sceneryName"
-			:background="background"
-			:border-bottom="false"
-			immersive
-		>
+		<u-navbar :is-back="true" back-icon-color="#ffffff" :title-color="titleColor" :title="partData.sceneryName"
+		 :background="background" :border-bottom="false" immersive>
 		</u-navbar>
 		<view class="figure">
 			<u-swiper v-if="teletext && teletext.length" :list="teletext" mode="none" name="fileUrl" img-mode="scaleToFill"
@@ -128,7 +122,7 @@
 										<view class="swiper-item uni-bg-red">
 											<scroll-view scroll-x class="scroll-box">
 												<view class="scrollMain">
-													<view v-for="(res,ind) in item.list" :key="ind" class="scroll_item">
+													<view v-for="(res,ind) in item.list" :key="ind" class="scroll_item" @tap="toDetails(res,item.type)">
 														<u-image border-radius="10" width="100%" height="150" :src="res.fileUrl" />
 														<view class="resName">
 															{{ nameType(res,item.type) }}
@@ -171,7 +165,7 @@
 				background: {
 					backgroundColor: 'rgba(79, 170, 129, 0)',
 				},
-				titleColor:'rgba(255, 255, 255, 0)',
+				titleColor: 'rgba(255, 255, 255, 0)',
 				tabsList: [{
 						name: '图文详情'
 					},
@@ -334,15 +328,50 @@
 					})
 				})
 			},
-			toNav() {}
+			toNav() {
+				const id = this.itemId
+					switch (id) {
+						case 0:
+							this.$prePage().active = 1
+							uni.navigateBack()
+							break;
+						case 1:
+							this.$prePage().active = 2
+							uni.navigateBack()
+							break;
+						case 2:
+							this.$prePage().active = 3
+							uni.navigateBack()
+							break;
+					}
+			},
+			toDetails(data, type) {
+				switch (type) {
+					case '风景':
+						uni.navigateTo({
+							url: `/ruralPages/particulars/sceneryDetails?id=${data.sceneryId}`
+						})
+						break;
+					case '美食':
+						uni.navigateTo({
+							url: `/ruralPages/particulars/foodDetails?id=${data.foodId}`
+						})
+						break;
+					case '民宿':
+						uni.navigateTo({
+							url: `/ruralPages/particulars/bedDetails?id=${data.bedId}`
+						})
+						break;
+				}
+			}
 		},
 		onPageScroll(e) {
 			let scrollTop = e.scrollTop;
-			if (scrollTop >= 0){
+			if (scrollTop >= 0) {
 				let opacity = scrollTop / 100
 				this.background.backgroundColor = `rgba(79, 170, 129, ${opacity})`
 				this.titleColor = `rgba(255, 255, 255, ${opacity})`
-			}else if(scrollTop >= 100){
+			} else if (scrollTop >= 100) {
 				this.background.backgroundColor = `rgba(79, 170, 129)`
 				this.titleColor = `rgba(255, 255, 255, ${opacity})`
 			}
@@ -520,7 +549,7 @@
 
 					.article {
 						font-size: $font-base;
-						color: $font-color-spec;
+						color: $color-black;
 						text-indent: 40upx;
 						padding-bottom: 20rpx;
 					}
@@ -570,18 +599,18 @@
 
 							.resName {
 								padding: 14rpx 0;
-								 white-space: nowrap;
-								    text-overflow: ellipsis;
-								    overflow: hidden;
-								    word-break: break-all;
+								white-space: nowrap;
+								text-overflow: ellipsis;
+								overflow: hidden;
+								word-break: break-all;
 							}
 
 							.resPrice {
 								padding: 14rpx 0;
-								 white-space: nowrap;
-								    text-overflow: ellipsis;
-								    overflow: hidden;
-								    word-break: break-all;
+								white-space: nowrap;
+								text-overflow: ellipsis;
+								overflow: hidden;
+								word-break: break-all;
 							}
 						}
 					}

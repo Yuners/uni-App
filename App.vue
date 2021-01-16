@@ -1,11 +1,30 @@
 <script>
+	import {
+		getToken,
+		removeToken
+	} from "@/utils/auth.js"
 	export default {
 		onLaunch: function() {
-			this.$store.dispatch('getProfile')
+			this.initData()
 		},
-		onShow: function() {
-		},
-		onHide: function() {
+		onShow: function() {},
+		onHide: function() {},
+		methods: {
+			async initData() {
+				const token = getToken()
+				if (token) {
+					try {
+						const res = await this.$store.dispatch('user/refreshLogin')
+						if(!res.userFlag){
+							this.$msg('登陆已过期，请重新登陆')
+							const outInfo = await this.$store.dispatch('user/logout')
+							console.log(outInfo)
+						}
+					} catch (err) {
+						console.log(Error)
+					}
+				}
+			}
 		}
 	}
 </script>
@@ -54,12 +73,13 @@
 		border: 0;
 	}
 
-			.loading {
-				margin-top: 300rpx;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
+	.loading {
+		margin-top: 300rpx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
 	// 导入colorUI
 	@import '/static/css/colorui/main.css';
 	@import '/static/css/colorui/icon.css';
@@ -67,6 +87,6 @@
 
 	@import "./assets/styles/uview.scss";
 	@import './static/css/uni.scss';
-	
+
 	/*#endif*/
 </style>

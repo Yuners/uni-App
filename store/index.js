@@ -1,6 +1,7 @@
 import Vue from "vue"
 import Vuex from "vuex"
 import { getAddress } from '@/api/address.js'
+import user from './modules/user.js'
 
 Vue.use(Vuex)
 
@@ -52,7 +53,9 @@ const store = new Vuex.Store({
 		defAddress: state => {
 			if (!state.profileList.length) return ''
 			return state.profileList[0]
-		}
+		},
+		isLogin: state => state.user.isLogin,
+		userInfo: state => state.user.userInfo,
 	},
 
     mutations:{
@@ -75,8 +78,11 @@ const store = new Vuex.Store({
 					})
 			})
 		}
-    }
+    },
 
+	modules: {
+		user
+	}
 })
 
 

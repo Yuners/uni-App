@@ -135,7 +135,7 @@
 			bottom: 0;
 			left: 0;
 			width: 100%;
-			height: 112rpx;
+			height: 130rpx;
 			padding: 0 30rpx;
 			background: rgba(0, 0, 0, .8);
 	

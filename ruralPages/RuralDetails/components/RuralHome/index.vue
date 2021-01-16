@@ -14,7 +14,7 @@
 				<u-swiper height="534" name="fileUrl" :list="villageFile" mode="dot" indicator-pos="bottomCenter"></u-swiper>
 			</view>
 			<view class="backImage" v-else-if="villageFile && villageType == '视频'">
-				<video src="" controls></video>
+				<video autoplay show-mute-btn class="_video" :src="villageFile[0].fileUrl" controls></video>
 			</view>
 			<view class="wrap-about">
 				<view class="villageInfo">
@@ -125,6 +125,10 @@
 			width: 100%;
 			height: 534rpx;
 
+			._video{
+				width: 100%;
+				height: 534rpx;
+			}
 			/* image {
 				width: 100%;
 				height: 100%;

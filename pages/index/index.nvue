@@ -78,9 +78,9 @@
 			return {
 				id: 0, // 使用 marker点击事件 需要填写id
 				title: 'map',
-				latitude: '',
-				longitude: '',
-				scale: 16,
+				latitude: 37.87350,
+				longitude: 112.56300,
+				scale: 7,
 				covers: [],
 				polygons: '',
 				markers: '',
@@ -105,13 +105,13 @@
 		},
 		onLoad() {
 			let _this = this
-			uni.getLocation({
+			/* uni.getLocation({
 				type: 'wgs84',
 				success: function(res) {
 					_this.latitude = res.latitude
 					_this.longitude = res.longitude
 				}
-			});
+			}); */
 			_this.getMarker()
 		},
 		methods: {
@@ -121,6 +121,7 @@
 				this.longitude = data.coordinate.lng
 				this.latitude = data.coordinate.lat
 				this.scale = 18
+				this.loading = false
 				this.$refs.popup.open()
 				this.getDetail(data)
 			},
