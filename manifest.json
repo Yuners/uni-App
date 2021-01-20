@@ -22,7 +22,8 @@
         },
         /* 模块配置 */
         "modules" : {
-            "Payment" : {}
+            "Payment" : {},
+            "Maps" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
@@ -62,8 +63,8 @@
                 "ad" : {},
                 "maps" : {
                     "amap" : {
-                        "appkey_ios" : "",
-                        "appkey_android" : ""
+                        "appkey_ios" : "2ca9270261c2355c8171e56f62ebda76",
+                        "appkey_android" : "2ca9270261c2355c8171e56f62ebda76"
                     }
                 },
                 "payment" : {
@@ -71,7 +72,8 @@
                         "__platform__" : [ "ios", "android" ]
                     }
                 },
-                "share" : {}
+                "share" : {},
+                "oauth" : {}
             }
         }
     },
