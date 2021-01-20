@@ -5,13 +5,20 @@
 				<view class="navContent">
 					<view class="flex-left" @tap="openCity">
 						<view class="text">
-							<span>杭州</span>
+							<span>{{ defaultArea.frameworkName }}</span>
 							<u-icon name="arrow-down" color="#ffffff" size="30" />
 						</view>
 					</view>
 					<view class="flex-center">
-						<u-search placeholder="输入乡村名字" v-model="keyword" height="60" :show-action="false" margin="0 0 0 15rpx" bg-color="#ffffff"
-						 :input-style="searchStyle" />
+						<u-search
+						 placeholder="输入乡村名字"
+						 height="60"
+						 :show-action="false"
+						 margin="0 0 0 15rpx"
+						 bg-color="#ffffff"
+						 :input-style="searchStyle"
+						 @search="confirmSearch"
+						  />
 					</view>
 				</view>
 			</u-navbar>
@@ -30,7 +37,7 @@
 		<view class="tabMain" v-show="current == 2">
 			<homestay ref="homestay" />
 		</view>
-		<!-- <lb-picker ref="picker" :loading="loading" v-model="value" :list="list" mode="multiSelector" :level="3" :props="myProps"></lb-picker> -->
+		<lb-picker ref="picker" v-model="value" :list="cityList" mode="multiSelector" :level="2" :props="myProps" @confirm="confirmPicker" ></lb-picker>
 		<!-- <u-select
 			v-model="show"
 			mode="mutil-column-auto"
@@ -47,9 +54,7 @@
 	import Scenery from "./components/scenery.vue"
 	import Gourmet from "./components/gourmet.vue"
 	import Homestay from "./components/homestay.vue"
-	import {
-		getCityList
-	} from "@/api/common.js"
+	import { mapGetters } from 'vuex'
 
 	export default {
 		data() {
@@ -60,6 +65,12 @@
 				keyword: '',
 				searchStyle: {
 					fontSize: '24rpx'
+				},
+				defaultArea:{
+					frameworkAdministrative: "140000000000",
+					frameworkId: "1338353936444280803",
+					frameworkName: "山西省",
+					frameworkPpId: "1338353936444280801",
 				},
 				tabsList: [{
 						name: '乡村风景'
@@ -76,21 +87,23 @@
 				myProps: {
 					label: 'frameworkName',
 					value: 'frameworkAdministrative',
-					children: 'items'
+					children: 'query'
 				},
 				value: [],
-				loading: false,
 				scenery: true,
 				gourmet: true,
 				homestay: true,
-				topHeight:'',
-				statusBarHeight:''
+				topHeight: '',
+				statusBarHeight: ''
 			}
 		},
 		components: {
 			Scenery,
 			Gourmet,
 			Homestay
+		},
+		computed: {
+			...mapGetters(['cityList'])
 		},
 		onReady() {
 			uni.getSystemInfo({
@@ -134,19 +147,19 @@
 			}
 		},
 		methods: {
-			confirm(val){
+			confirm(val) {
 				console.log(val)
 			},
 			sectionChange(index) {
 				this.current = index
 				switch (index) {
 					case 1:
-						if(!this.gourmet) return
+						if (!this.gourmet) return
 						this.gourmet = false
 						this.$refs.gourmet.fetchData()
 						break;
 					case 2:
-						if(!this.homestay) return
+						if (!this.homestay) return
 						this.homestay = false
 						this.$refs.homestay.fetchData()
 						break;
@@ -154,22 +167,13 @@
 			},
 			openCity() {
 				this.$refs.picker.show()
-				if (this.list && this.list.length) return
-				/* this.loading = true
-				this.getCity() */
 			},
-			getCity() {
-				/* let params = {
-					id: "1338353936444280801"
-				}
-				getCityList(params)
-					.then(res => {
-						console.log(res)
-						this.list = res.data.items
-						console.log(this.list)
-						this.loading = false
-					})
-					.catch(err => {}) */
+			confirmSearch(value){
+				console.log(value)
+			},
+			confirmPicker(value) {
+				const data = value.item.reverse()[0]
+				this.defaultArea = data
 			}
 		},
 
@@ -210,8 +214,8 @@
 				flex: 1;
 			}
 		}
-		
-		
+
+
 		.scroll-box {
 			background: #F4F4F4;
 

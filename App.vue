@@ -11,6 +11,7 @@
 		onHide: function() {},
 		methods: {
 			async initData() {
+				this.$store.dispatch('getCity')
 				const token = getToken()
 				if (token) {
 					try {

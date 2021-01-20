@@ -2,33 +2,23 @@
 	<view class="set">
 		<view class="list-cell b-b" @tap="navTo('/pages/Member/userInfo/userInfo')" hover-class="cell-hover">
 			<text class="cell-tit">我的资料</text>
-			<!-- <text class="cell-tip"></text> -->
-			<text class="cell-more iconfont iconyou"></text>
-		</view>
-		<view class="list-cell b-b" @tap="navTo()" hover-class="cell-hover">
-			<text class="cell-tit">支付设置</text>
-			<!-- <text class="cell-tip"></text> -->
-			<text class="cell-more iconfont iconyou"></text>
+			<u-icon name="arrow-right" color="#606266" size="36"></u-icon>
 		</view>
 		<view class="list-cell b-b" @tap="navTo('/ruralPages/address/address')" hover-class="cell-hover">
 			<text class="cell-tit">收货地址</text>
-			<!-- <text class="cell-tip"></text> -->
-			<text class="cell-more iconfont iconyou"></text>
+			<u-icon name="arrow-right" color="#606266" size="36"></u-icon>
 		</view>
 		<view class="list-cell b-b" @tap="navTo('/ruralPages/order/evaluation/myRating')" hover-class="cell-hover">
 			<text class="cell-tit">我的评价</text>
-			<!-- <text class="cell-tip"></text> -->
-			<text class="cell-more iconfont iconyou"></text>
+			<u-icon name="arrow-right" color="#606266" size="36"></u-icon>
 		</view>
 		<view class="list-cell b-b" @tap="navTo('/ruralPages/certification/certification')" hover-class="cell-hover">
 			<text class="cell-tit">商户绑定</text>
-			<!-- <text class="cell-tip"></text> -->
-			<text class="cell-more iconfont iconyou"></text>
+			<u-icon name="arrow-right" color="#606266" size="36"></u-icon>
 		</view>
 		<view class="list-cell b-b" @tap="navTo('/ruralPages/password/changePass')" hover-class="cell-hover">
 			<text class="cell-tit">修改密码</text>
-			<!-- <text class="cell-tip"></text> -->
-			<text class="cell-more iconfont iconyou"></text>
+			<u-icon name="arrow-right" color="#606266" size="36"></u-icon>
 		</view>
 		<!-- #ifdef APP-PLUS -->
 		<view class="list-cell m-t">

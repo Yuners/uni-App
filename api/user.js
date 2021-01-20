@@ -48,3 +48,12 @@ export function sendCode(params){
 export function register(params){
     return request.post( host.user + '/user/registered', params )
 }
+
+
+/**
+ * 获取用户信息
+ * @param {Object} params
+ */
+export function getUserInfo(){
+    return request.get( host.user + '/user' )
+}

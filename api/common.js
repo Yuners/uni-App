@@ -5,8 +5,8 @@ import host from "./serve/jxy.js"
  * 获取城市联动
  * @param {Object} params
  */
-export function getCityList( params ){
-	return request.post( host.role + '/framework/select',  params )
+export function getCityList(){
+	return request.get( host.role + '/framework/app/select' )
 }
 
 

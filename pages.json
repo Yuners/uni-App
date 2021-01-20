@@ -104,7 +104,14 @@
 				"navigationBarTitleText": "版本说明"
 			}
 
-		}
+		},
+			{
+				"path": "pages/Member/userInfo/u-avatar-cropper/u-avatar-cropper",
+				"style": {
+					"navigationBarTitleText": "头像裁剪",
+					"navigationBarBackgroundColor": "#000000"
+				}
+			}
 	],
 	"subPackages": [{
 		"root": "ruralPages",

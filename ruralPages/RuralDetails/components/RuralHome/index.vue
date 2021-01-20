@@ -24,7 +24,7 @@
 					<view class="site">
 						<image :src="require('@/static/images/icon_location@3x.png')" />
 						<view class="siteInfo">
-							杭州市仓前街道良渚镇良渚村
+							{{ villageInfo.provinceName }}{{ villageInfo.cityName }}{{ villageInfo.countyName }}{{ villageInfo.townName }}
 						</view>
 						<view class="skit">
 							导航>

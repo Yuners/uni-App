@@ -427,6 +427,10 @@
 	position: relative;
 	background: #fff;
 	justify-content: center;
+	
+	&:not(:last-child){
+		@include _border($dir: bottom)
+	}
 
 	&.log-out-btn {
 		margin: 40upx 0;
