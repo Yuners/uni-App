@@ -5,12 +5,15 @@
 			<view class="order-content">
 				<u-icon name="map" style="width: 90rpx;text-align: center;display: flex;justify-content: center;" color="#909399"
 				 size="44" />
-				<view class="cen">
+				<view class="cen" v-if="defAddress">
 					<view class="top">
 						<text class="name">{{defAddress.ressUserName}}</text>
 						<text class="mobile">{{defAddress.ressMobile}}</text>
 					</view>
 					<text class="address">{{ defAddress.ressLocation.replace(defAddress.ressDetail, '') }} {{defAddress.ressDetail}} {{defAddress.ressDoorplate}}</text>
+				</view>
+				<view class="cen" v-else>
+					<text> 暂无收货地址，请创建收货地址 </text>
 				</view>
 				<u-icon name="arrow-right" style="margin-right: 34rpx;" color="#909399" size="32" />
 			</view>
@@ -23,7 +26,7 @@
 			</view>
 			<!-- 商品列表 -->
 			<view class="g-item">
-				<u-image width="140" border-radius="10" height="140" :src="productData.showFileUrl" />
+				<u-image width="140" border-radius="10" height="140" :src="productData.fileUrlList.length ? productData.fileUrlList[0].fileUrl : ''" />
 				<view class="right">
 					<view class="rightInfo">
 						<text class="title clamp">{{ productData.specialtyName }}</text>
@@ -193,6 +196,7 @@
 			},
 			// 计算邮费
 			imputedPrice() {
+				if (!this.defAddress) return -1
 				let city = this.defAddress.ressProvinceId
 				let spec = this.specSelected
 				let freight = JSON.parse(JSON.stringify(this.freightData))
@@ -315,7 +319,7 @@
 				left: 0;
 				width: 100%;
 				height: 100%;
-				background-color: rgba(0, 0, 0, .5);
+				background-color: rgba(238, 238, 238, 0.5);
 				z-index: 1;
 			}
 		}

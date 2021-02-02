@@ -19,7 +19,8 @@
 						if(!res.userFlag){
 							this.$msg('登陆已过期，请重新登陆')
 							const outInfo = await this.$store.dispatch('user/logout')
-							console.log(outInfo)
+						} else {
+							this.$store.dispatch('getProfile')
 						}
 					} catch (err) {
 						console.log(Error)

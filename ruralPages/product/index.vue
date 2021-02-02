@@ -504,10 +504,13 @@
 					this.specClass = 'hide';
 					setTimeout(() => {
 						this.specClass = 'none';
-						this.shopNumber = 1
+						// this.shopNumber = 1
+						if (this.specSelected){
+							this.buy()
+						}
 					}, 250);
 				} else if (this.specClass === 'none') {
-					this.shopNumber = 1
+					// this.shopNumber = 1
 					this.specClass = 'show';
 				}
 			},
@@ -557,9 +560,7 @@
 				} else {
 					if (!this.specSelected) {
 						this.$msg('请选择规格后提交')
-						setTimeout(() => {
-							this.toggleSpec()
-						}, 1000)
+						this.toggleSpec()
 						return
 					}
 					uni.navigateTo({

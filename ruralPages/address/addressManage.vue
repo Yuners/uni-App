@@ -126,7 +126,8 @@
 					this.$msg('请输入正确的手机号码');
 					return;
 				}
-				if(!data.ressLocation){
+				console.log(data.ressLocation)
+				if(data.ressLocation == '在地图选择'){
 					this.$msg('请在地图选择所在位置');
 					return;
 				}
